@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang=>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  
+    <link rel="icon" href="">
+  
+    
+  <title>毕业了 | Yuuki Blog</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lib/jquery.fancybox.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+  <div class="header-container">
+    <a class='logo' href="/">
+      <span>Yuuki Blog</span>
+    </a>
+    <ul class="right-header">
+      
+        <li class="nav-item">
+          
+            <a href="/" class="item-link">首页</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/about" class="item-link">关于</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/archives" class="item-link">归档</a>
+          
+        </li>
+      
+        <li class="nav-item">
+          
+            <a href="/tags" class="item-link">标签</a>
+          
+        </li>
+      
+    </ul>
+  </div>
+</header>
+
+  <main id='post'>
+  <div class="content">
+    <article>
+        <section class="content markdown-body">
+          <h1>毕业了</h1>
+          <div class='post-meta'>
+            <i class="fa fa-calendar" aria-hidden="true"></i> <time>2018/06/23</time>
+            
+            
+              | 
+                  <i class="fa fa-tag" aria-hidden="true"></i>
+                
+               
+  <a href="/tags/#生活" class='tag'>生活</a>
+
+
+            
+          </div>
+          <blockquote>
+<p>总以为离别遥遥无期，转眼就各奔东西</p>
+</blockquote>
+<hr>
+<p>结束了四年的大学生活，很幸运认识了班里这么多有趣的人。<br>作为唯一一个住在七楼的人，谢谢楼上的各位一直以来对我的帮助，虽然你们经常不让我在七楼下电梯。<br>更感谢我705的叼毛舍友们，虽然我们不同专业但是我们的关系非常棒，讲真的有时我真的感觉你们挺烦的，想搬出去住， 然而真的我搬出来了，晚上自己一个人在这狗窝对着电脑发呆的时候，真的眼泪都快流出来了。真的很想念在宿舍的日子，无聊的时候还能回过头骂骂杨雨润菜鸡。</p>
+<p>也很高兴我加入了学促这个大家庭，在那里疯了两年，认识了帅气的学长们还有美丽的学姐们，结识了很多不同专业的朋友，也带了一批可爱的学弟学妹们。我是很舍不得你们的！还记得我们一起通宵布置场地，一起讨论活动的流程，一起去露营，去喝酒…感谢大学四年有你们的陪伴。</p>
+<p>最后，最不舍得还是罗怡芳了。想当初我们俩就像连体婴儿一样，一起上课、一起下课、一起吃饭、一起翘课、公选课也是一起去上，曾经的我傻傻的以为我们会这样一直下去，但不知道啥时候开始，我悄悄的喜欢上了你。本着爱屋及乌的原则，我也和615的各位混的贼熟，当上了你们的舍长，谢谢615的各位当时给我的勇气，让我这么一个胆小的人敢鼓起勇气跟你表白，很开心，你答应了我，但是由于我的原因吧，我没能好好维持这段恋情。对不起。不过虽然我们分开了，但是关系还是跟以前一样的铁，或许我们也只适合当朋友吧，虽然我不甘心我们只是朋友，但是我这个人好像只适合当朋友不适合当恋人…嘛，希望以后你能找到一个比我更加喜欢你的人吧，但是请记住，我永远是你的好朋友。</p>
+<p>真的是，眼眶怎么湿湿的。毕业快乐吧。</p>
+
+        </section>
+    </article>
+    
+        
+  </div>
+  <aside>
+    
+  </aside>
+</main>
+
+
+
+  <footer>
+  <div class="copyright">
+    <div>
+      &copy; 2018 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a>&nbsp
+    </div>
+    <div>
+      Theme by <a href="https://github.com/lewis-geek/hexo-theme-Aath" target="_blank">Aath</a>
+    </div>
+  </div>
+</footer>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="/lib/in-view.min.js"></script>
+<script src="/lib/lodash.min.js"></script>
+<script>
+  var isDown = true
+  var oldY = 0
+  inView.offset(50)
+
+  document.body.addEventListener('touchstart', function(){});
+  
+  window.addEventListener('scroll', _.throttle(e => {
+    var currentY = window.scrollY
+    if((oldY - currentY) < 0) {
+      isDown = true
+    } else {
+      isDown = false
+    }
+    oldY = currentY
+  }, 250))
+
+  $("article img").each(function() {
+      var strA = "<a data-fancybox='gallery' href='" + this.src + "'></a>";
+      $(this).wrapAll(strA);
+  });
+
+  $('.toc-link').each(function() {
+      var href = $(this).attr("href");
+      
+      inView(href).on('exit', () => {
+        if (isDown) {
+          handleActive(href)
+        }
+      })
+
+      inView(href).on('enter', () => {
+        if (!isDown) {
+          handleActive(href)
+        }
+      })
+
+      this.onclick = function(e) {
+        var pos = $(href).offset().top - 10;
+        $("html,body").animate({scrollTop: pos}, 300);
+        setTimeout(() => {
+          handleActive(href)
+        }, 350)
+        return false
+      }
+  })
+
+  function handleActive(href) {
+    document.querySelectorAll('.toc-link').forEach(elm => {
+      elm.classList.remove('active')
+    })
+    document.querySelector(".toc [href='"+ href +"']").classList.add('active')
+  }
+</script>
+<script src="/lib/jquery.fancybox.min.js"></script>
+
+
+</body>
+</html>
