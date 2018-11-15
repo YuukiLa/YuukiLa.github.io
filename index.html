@@ -2,15 +2,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -38,10 +50,6 @@
 
 
 
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
 
 
 
@@ -50,42 +58,25 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT" />
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
 
 
 
 
 
 
-
-
-
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yuuki Blog">
-<meta property="og:url" content="https://yuuki80code.github.io/index.html">
-<meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yuuki Blog">
 
 
 
@@ -93,16 +84,14 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    version: '5.1.4',
+    scheme: 'Mist',
+    version: '6.5.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -114,12 +103,33 @@
 </script>
 
 
+  
+
+
+
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Yuuki Blog">
+<meta property="og:url" content="https://yuuki80code.github.io/index.html">
+<meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yuuki Blog">
+
+
+
+
+
 
   <link rel="canonical" href="https://yuuki80code.github.io/"/>
 
 
 
-
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
 
   <title>Yuuki Blog</title>
   
@@ -130,6 +140,36 @@
 
 
 
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
 
 </head>
 
@@ -150,19 +190,17 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Yuuki Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -170,55 +208,89 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
+          
+          <li class="menu-item menu-item-home menu-item-active">
+
+    
+    
+    
       
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
       
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
 
       
+      
     </ul>
+  
+
+  
+    
+
   
 
   
@@ -226,12 +298,20 @@
 
 
 
- </div>
+  
+
+
+
+</div>
     </header>
+
+    
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -244,6 +324,8 @@
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -254,7 +336,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -268,25 +350,39 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/25/java8-函数式接口学习/" itemprop="url">java8 函数式接口学习</a></h1>
+                
+                <a href="/2018/10/25/java8-函数式接口学习/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">java8 函数式接口学习</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-25T11:24:16+08:00">
-                2018-10-25
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-10-25 11:24:16 / Modified: 11:42:39" itemprop="dateCreated datePublished" datetime="2018-10-25T11:24:16+08:00">2018-10-25</time>
             
 
             
+              
 
+              
             
           </span>
 
@@ -320,28 +416,33 @@
       
         
           
-            <h4 id="Function功能型函数式接口"><a href="#Function功能型函数式接口" class="headerlink" title="Function功能型函数式接口"></a>Function功能型函数式接口</h4><p>Function接口接收一个参数T，返回一个参数R。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    static int getResult(int value,Function&lt;Integer,Integer&gt; fun)&#123;</span><br><span class="line"></span><br><span class="line">        return fun.apply(value);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // andThen value作为fun1的参数，得出的结果再作为fun2的参数</span><br><span class="line">    static String getResultAndThen(int value,Function&lt;Integer,Integer&gt; fun1,Function&lt;Integer,String&gt; fun2)&#123;</span><br><span class="line">        return fun1.andThen(fun2).apply(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">//        int num = 1;</span><br><span class="line"></span><br><span class="line">        System.out.println(getResult(1, (x) -&gt; x + 1));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(getResultAndThen(1, (x) -&gt; x + 1, (x) -&gt; x + &quot;s&quot;));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><em>andThen</em> Function1的结果作为Function2的参数</p>
-<h4 id="Consumer消费型函数式接口"><a href="#Consumer消费型函数式接口" class="headerlink" title="Consumer消费型函数式接口"></a>Consumer消费型函数式接口</h4><p>Consumer接口，接收一个参数但是无返回值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static void consumer(int value, Consumer&lt;Integer&gt; consumer)&#123;</span><br><span class="line">    consumer.accept(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    consumer(1,(x)-&gt; System.out.println(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>说实话，我不知道这个接口干嘛用- -</p>
-<h4 id="Predicate断言型函数式接口"><a href="#Predicate断言型函数式接口" class="headerlink" title="Predicate断言型函数式接口"></a>Predicate断言型函数式接口</h4><p>Predicate接口接收一个参数，返回一个布尔值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static boolean assest(int value, Predicate&lt;Integer&gt; predicate)&#123;</span><br><span class="line">    return predicate.test(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    System.out.println(assest(2, (x) -&gt; x % 2 == 1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Supplier供给型函数式接口"><a href="#Supplier供给型函数式接口" class="headerlink" title="Supplier供给型函数式接口"></a>Supplier供给型函数式接口</h4><p>Supplier接口，无参数，返回一个结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static List&lt;?&gt; getBean(Supplier&lt;?&gt; supplier)&#123;</span><br><span class="line">    return (List&lt;?&gt;) supplier.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    System.out.println(getBean(() -&gt; Arrays.asList(new Integer[]&#123;1, 2, 3, 4, 5&#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>呀，先学个大概吧，实际项目中感觉用不太到- -用到再说吧~就酱！</p>
-
+          Function功能型函数式接口Function接口接收一个参数T，返回一个参数R。
+12345678910111213141516171819    static int getResult(int value,Function&lt;Integer,Integer&gt; fun)&#123; 
+          ...
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/10/25/java8-函数式接口学习/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+       
+    
     
 
     
@@ -372,6 +473,8 @@
 
   
   
+  
+
   
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
@@ -384,7 +487,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -398,25 +501,39 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/17/Vue学习之-bus状态管理/" itemprop="url">Vue学习之 bus状态管理</a></h1>
+                
+                <a href="/2018/09/17/Vue学习之-bus状态管理/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">Vue学习之 bus状态管理</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-17T20:33:26+08:00">
-                2018-09-17
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-09-17 20:33:26 / Modified: 20:55:35" itemprop="dateCreated datePublished" datetime="2018-09-17T20:33:26+08:00">2018-09-17</time>
             
 
             
+              
 
+              
             
           </span>
 
@@ -450,31 +567,35 @@
       
         
           
-            <p>vue使用bus来进行组件间通讯（兄弟组件之间）</p>
-<h4 id="新建一个-js-bus-js"><a href="#新建一个-js-bus-js" class="headerlink" title="新建一个 js bus.js"></a>新建一个 js <code>bus.js</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line"></span><br><span class="line">const bus = new Vue()</span><br><span class="line">export default bus</span><br></pre></td></tr></table></figure>
-<p>作为通讯的中间媒介</p>
-<h4 id="在main-js中修改vue的prototype"><a href="#在main-js中修改vue的prototype" class="headerlink" title="在main.js中修改vue的prototype"></a>在main.js中修改vue的prototype</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$bus = bus</span><br></pre></td></tr></table></figure>
-<h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><p>准备两个组件，比如emil.vue和tel.vue</p>
-<p>在emil.vue 里面，写一个button，并且给一个点击事件,触发后执行</p>
-<p><code>this.$bus.$emit(&#39;on-click&#39;,&#39;vue bus state manager&#39;)</code></p>
-<p>在tel.vue里显示一个message，并在mounted事件里面执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.$bus.$on(&apos;on-click&apos;,msg=&gt;&#123;</span><br><span class="line">  this.message = msg</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>点击emil.vue里面得按钮后，改变tel.vue里面得message的值</p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><blockquote>
-<p>$emit 可以触发当前实例上的事件，附加的参数会传递给监听器回调<br><br>$on 监听当前实例上的自定义事件。事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。</p>
-</blockquote>
-<p>在tel.vue里面使用$on监听<em>on-click</em> 事件，在emil.vue里面使用$emit 触发<em>on-click</em> 事件，通过bus这个vue实例，从而实现兄弟组件间的通讯。</p>
-
+          vue使用bus来进行组件间通讯（兄弟组件之间）
+新建一个 js bus.js1234import Vue from &apos;vue&apos;const bus = new Vue()export default bus
+作为通讯的中间媒介
+在main.js中修改vue的prototype1V
+          ...
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/09/17/Vue学习之-bus状态管理/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+       
+    
     
 
     
@@ -507,123 +628,6 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/07/15/从0开始搭建自己的小说网站（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yuuki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yuuki Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/15/从0开始搭建自己的小说网站（一）/" itemprop="url">从0开始搭建自己的小说网站（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-15T21:16:00+08:00">
-                2018-07-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
   
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
@@ -636,7 +640,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -650,25 +654,51 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/23/毕业了/" itemprop="url">毕业了</a></h1>
+                
+                <a href="/2018/06/23/毕业了/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">毕业了</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-23T09:55:33+08:00">
-                2018-06-23
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-06-23 09:55:33" itemprop="dateCreated datePublished" datetime="2018-06-23T09:55:33+08:00">2018-06-23</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-06-25 21:23:24" itemprop="dateModified" datetime="2018-06-25T21:23:24+08:00">2018-06-25</time>
+              
             
           </span>
 
@@ -702,25 +732,36 @@
       
         
           
-            <blockquote>
-<p>总以为离别遥遥无期，转眼就各奔东西</p>
-</blockquote>
-<hr>
-<p>结束了四年的大学生活，很幸运认识了班里这么多有趣的人。<br>作为唯一一个住在七楼的人，谢谢楼上的各位一直以来对我的帮助，虽然你们经常不让我在七楼下电梯。<br>更感谢我705的叼毛舍友们，虽然我们不同专业但是我们的关系非常棒，讲真的有时我真的感觉你们挺烦的，想搬出去住， 然而真的我搬出来了，晚上自己一个人在这狗窝对着电脑发呆的时候，真的眼泪都快流出来了。真的很想念在宿舍的日子，无聊的时候还能回过头骂骂杨雨润菜鸡。</p>
-<p>也很高兴我加入了学促这个大家庭，在那里疯了两年，认识了帅气的学长们还有美丽的学姐们，结识了很多不同专业的朋友，也带了一批可爱的学弟学妹们。我是很舍不得你们的！还记得我们一起通宵布置场地，一起讨论活动的流程，一起去露营，去喝酒…感谢大学四年有你们的陪伴。</p>
-<p>最后，最不舍得还是罗怡芳了。想当初我们俩就像连体婴儿一样，一起上课、一起下课、一起吃饭、一起翘课、公选课也是一起去上，曾经的我傻傻的以为我们会这样一直下去，但不知道啥时候开始，我悄悄的喜欢上了你。本着爱屋及乌的原则，我也和615的各位混的贼熟，当上了你们的舍长，谢谢615的各位当时给我的勇气，让我这么一个胆小的人敢鼓起勇气跟你表白，很开心，你答应了我，但是由于我的原因吧，我没能好好维持这段恋情。对不起。不过虽然我们分开了，但是关系还是跟以前一样的铁，或许我们也只适合当朋友吧，虽然我不甘心我们只是朋友，但是我这个人好像只适合当朋友不适合当恋人…嘛，朋友也不是不行。。。</p>
-<p>敲着敲着有点想哭- -毕业快乐吧。</p>
-
           
+总以为离别遥遥无期，转眼就各奔东西
+
+
+结束了四年的大学生活，很幸运认识了班里这么多有趣的人。作为唯一一个住在七楼的人，谢谢楼上的各位一直以来对我的帮助，虽然你们经常不让我在七楼下电梯。更感谢我705的叼毛舍友们，虽然我们不同专业但是我们的关系非常棒，讲真的有时我真的感觉你们挺烦的，想搬出去住， 
+          ...
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/23/毕业了/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+       
+    
     
 
     
@@ -751,6 +792,8 @@
 
   
   
+  
+
   
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
@@ -763,7 +806,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -777,25 +820,39 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" itemprop="url">Spring Boot2.0 自定义redisCacheManager</a></h1>
+                
+                <a href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">Spring Boot2.0 自定义redisCacheManager</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">
-                2018-06-16
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-06-16 16:37:07 / Modified: 17:06:08" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">2018-06-16</time>
             
 
             
+              
 
+              
             
           </span>
 
@@ -829,27 +886,32 @@
       
         
           
-            <p>Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。<br>提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。<br>用了poolFactor嘛，所以pom文件要加一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.4.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
-<p>好像cacheManager不提供设置默认的缓存过期时间等设置（当然也有可能我没发现- -）。<br>所以我用了RedisCacheConfiguration来设置默认的缓存过期时间，具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 缓存管理器</span><br><span class="line">   @Bean</span><br><span class="line">   public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) &#123;</span><br><span class="line"></span><br><span class="line">       // 初始化一个RedisCacheWriter</span><br><span class="line">       RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">       // 设置缓存过期时间（秒）</span><br><span class="line">       RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">               .entryTtl(Duration.ofSeconds(1800));</span><br><span class="line">       return new RedisCacheManager(cacheWriter,redisCacheConfiguration);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>当然，自定义key的生成策略跟自定义序列化跟之前差不多，看代码:</p>
-<ul>
-<li><p>修改默认的序列化方式 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 修改默认的序列化方式</span><br><span class="line">   @Bean</span><br><span class="line">   @ConditionalOnMissingBean(name = &quot;redisTemplate&quot;)</span><br><span class="line">   public RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       RedisTemplate&lt;Object, Object&gt; template = new RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">       template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       return template;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @Bean</span><br><span class="line">   @ConditionalOnMissingBean(StringRedisTemplate.class)</span><br><span class="line">   public StringRedisTemplate stringRedisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       StringRedisTemplate template = new StringRedisTemplate();</span><br><span class="line">       setSerializer(template);</span><br><span class="line">       template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       return template;</span><br><span class="line">   &#125;</span><br><span class="line">   private void setSerializer(StringRedisTemplate template) &#123;</span><br><span class="line">       @SuppressWarnings(&#123; &quot;rawtypes&quot;, &quot;unchecked&quot; &#125;)</span><br><span class="line">       Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);</span><br><span class="line">       ObjectMapper om = new ObjectMapper();</span><br><span class="line">       om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">       om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">       jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">       template.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自定义key生成策略</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 自定义缓存key生成策略</span><br><span class="line">   @Bean</span><br><span class="line">   public KeyGenerator keyGenerator() &#123;</span><br><span class="line">       return new KeyGenerator() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public Object generate(Object target, java.lang.reflect.Method method, Object... params) &#123;</span><br><span class="line">               StringBuffer sb = new StringBuffer();</span><br><span class="line">               sb.append(target.getClass().getName());</span><br><span class="line">               sb.append(method.getName());</span><br><span class="line">               for (Object obj : params) &#123;</span><br><span class="line">                   sb.append(obj.toString());</span><br><span class="line">               &#125;</span><br><span class="line">               return sb.toString();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
+          Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。用了poolFactor嘛，所以pom文件要加一下12345 &lt;dependen
+          ...
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+       
+    
     
 
     
@@ -882,6 +944,8 @@
   
   
 
+  
+
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
@@ -892,7 +956,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -906,25 +970,51 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/07/第一篇/" itemprop="url">第一篇</a></h1>
+                
+                <a href="/2018/06/07/第一篇/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">第一篇</a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-07T19:51:36+08:00">
-                2018-06-07
-              </time>
+
+              
+                
+              
+
+              <time title="Created: 2018-06-07 19:51:36" itemprop="dateCreated datePublished" datetime="2018-06-07T19:51:36+08:00">2018-06-07</time>
             
 
             
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-06-16 14:08:08" itemprop="dateModified" datetime="2018-06-16T14:08:08+08:00">2018-06-16</time>
+              
             
           </span>
 
@@ -958,18 +1048,33 @@
       
         
           
-            <h3 id="第一次写"><a href="#第一次写" class="headerlink" title="第一次写"></a>第一次写</h3><p>emmmmmm，随便试试</p>
+          第一次写emmmmmm，随便试试
 
           
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/07/第一篇/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
+
+    
+
     
     
     
 
     
 
+    
+       
+    
     
 
     
@@ -1002,9 +1107,6 @@
           </div>
           
 
-
-          
-
         </div>
         
           
@@ -1029,47 +1131,54 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image"
-                src="http://bishe-1252019772.cosgz.myqcloud.com/avater.jpg"
-                alt="yuuki" />
-            
               <p class="site-author-name" itemprop="name">yuuki</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
+          
+            <nav class="site-state motion-element">
               
-                <a href="/archives/">
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
               
-                  <span class="site-state-item-count">6</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
 
-            
-
-            
               
+
               
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
           
 
           
 
           
+
           
 
           
@@ -1082,13 +1191,16 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://mrbird.cc" title="MrBird" target="_blank">MrBird</a>
+                    <a href="https://mrbird.cc" title="https://mrbird.cc" rel="noopener" target="_blank">MrBird</a>
                   </li>
                 
               </ul>
             </div>
           
 
+          
+            
+          
           
 
         </div>
@@ -1109,10 +1221,12 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">yuuki</span>
+
+  
 
   
 </div>
@@ -1121,7 +1235,14 @@
 
 
 
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+
+
+
+
         
+
 
 
 
@@ -1141,7 +1262,10 @@
     
 
     
+	
+    
 
+    
   </div>
 
   
@@ -1160,7 +1284,11 @@
 
 
 
-  
+
+
+
+
+
 
 
 
@@ -1180,16 +1308,6 @@
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
     <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
@@ -1198,18 +1316,13 @@
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
 
 
 
@@ -1221,25 +1334,15 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
 
 
 
   
 
 
-  
-
-
-
-
-
-
-
 
   
-
-
 
 
 
@@ -1263,6 +1366,16 @@
   
 
   
+
+  
+
+  
+  
+
+  
+
+  
+
   
 
   
