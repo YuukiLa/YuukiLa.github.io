@@ -14,7 +14,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -115,7 +115,7 @@
 <meta property="og:url" content="https://yuuki80code.github.io/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
 <meta property="og:description" content="Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。用了poolFactor嘛，所以pom文件要加一下12345 &amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.apache.commons&amp;lt;/group">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-06-16T09:06:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot2.0 自定义redisCacheManager">
@@ -178,7 +178,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -204,7 +204,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -232,7 +232,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
 
   </li>
         
@@ -249,7 +249,7 @@
 
     
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
 
   </li>
         
@@ -266,7 +266,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
 
   </li>
         
@@ -283,7 +283,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
 
   </li>
 
@@ -370,14 +370,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-06-16 16:37:07 / Modified: 17:06:08" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">2018-06-16</time>
+              <time title="创建时间：2018-06-16 16:37:07 / 修改时间：17:06:08" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">2018-06-16</time>
             
 
             
@@ -415,15 +415,15 @@
       
 
       
-        <p>Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。<br>提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。<br>用了poolFactor嘛，所以pom文件要加一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.commons&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.4.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
-<p>好像cacheManager不提供设置默认的缓存过期时间等设置（当然也有可能我没发现- -）。<br>所以我用了RedisCacheConfiguration来设置默认的缓存过期时间，具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 缓存管理器</span><br><span class="line">   @Bean</span><br><span class="line">   public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) &#123;</span><br><span class="line"></span><br><span class="line">       // 初始化一个RedisCacheWriter</span><br><span class="line">       RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">       // 设置缓存过期时间（秒）</span><br><span class="line">       RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">               .entryTtl(Duration.ofSeconds(1800));</span><br><span class="line">       return new RedisCacheManager(cacheWriter,redisCacheConfiguration);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+        <p>Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。<br>提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。<br>用了poolFactor嘛，所以pom文件要加一下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>好像cacheManager不提供设置默认的缓存过期时间等设置（当然也有可能我没发现- -）。<br>所以我用了RedisCacheConfiguration来设置默认的缓存过期时间，具体代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 缓存管理器</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">CacheManager <span class="title">cacheManager</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 初始化一个RedisCacheWriter</span></span><br><span class="line">       RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">       <span class="comment">// 设置缓存过期时间（秒）</span></span><br><span class="line">       RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">               .entryTtl(Duration.ofSeconds(<span class="number">1800</span>));</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> RedisCacheManager(cacheWriter,redisCacheConfiguration);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
 <p>当然，自定义key的生成策略跟自定义序列化跟之前差不多，看代码:</p>
 <ul>
 <li><p>修改默认的序列化方式 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 修改默认的序列化方式</span><br><span class="line">   @Bean</span><br><span class="line">   @ConditionalOnMissingBean(name = &quot;redisTemplate&quot;)</span><br><span class="line">   public RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       RedisTemplate&lt;Object, Object&gt; template = new RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">       template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       return template;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   @Bean</span><br><span class="line">   @ConditionalOnMissingBean(StringRedisTemplate.class)</span><br><span class="line">   public StringRedisTemplate stringRedisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       StringRedisTemplate template = new StringRedisTemplate();</span><br><span class="line">       setSerializer(template);</span><br><span class="line">       template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       return template;</span><br><span class="line">   &#125;</span><br><span class="line">   private void setSerializer(StringRedisTemplate template) &#123;</span><br><span class="line">       @SuppressWarnings(&#123; &quot;rawtypes&quot;, &quot;unchecked&quot; &#125;)</span><br><span class="line">       Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);</span><br><span class="line">       ObjectMapper om = new ObjectMapper();</span><br><span class="line">       om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">       om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">       jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">       template.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改默认的序列化方式</span></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">   <span class="keyword">public</span> RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       RedisTemplate&lt;Object, Object&gt; <span class="keyword">template</span> = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(StringRedisTemplate.<span class="keyword">class</span>)</span><br><span class="line">   <span class="keyword">public</span> StringRedisTemplate stringRedisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       StringRedisTemplate <span class="keyword">template</span> = <span class="keyword">new</span> StringRedisTemplate();</span><br><span class="line">       setSerializer(<span class="keyword">template</span>);</span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> setSerializer(StringRedisTemplate <span class="keyword">template</span>) &#123;</span><br><span class="line">       <span class="keyword">@SuppressWarnings</span>(&#123; <span class="string">"rawtypes"</span>, <span class="string">"unchecked"</span> &#125;)</span><br><span class="line">       Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer(Object.<span class="keyword">class</span>);</span><br><span class="line">       ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">       om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">       om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">       jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">       <span class="keyword">template</span>.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>自定义key生成策略</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 自定义缓存key生成策略</span><br><span class="line">   @Bean</span><br><span class="line">   public KeyGenerator keyGenerator() &#123;</span><br><span class="line">       return new KeyGenerator() &#123;</span><br><span class="line">           @Override</span><br><span class="line">           public Object generate(Object target, java.lang.reflect.Method method, Object... params) &#123;</span><br><span class="line">               StringBuffer sb = new StringBuffer();</span><br><span class="line">               sb.append(target.getClass().getName());</span><br><span class="line">               sb.append(method.getName());</span><br><span class="line">               for (Object obj : params) &#123;</span><br><span class="line">                   sb.append(obj.toString());</span><br><span class="line">               &#125;</span><br><span class="line">               return sb.toString();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义缓存key生成策略</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">KeyGenerator <span class="title">keyGenerator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="function">Object <span class="title">generate</span><span class="params">(Object <span class="keyword">target</span>, java.lang.reflect.Method method, Object... params)</span> </span>&#123;</span><br><span class="line">               StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">               sb.append(<span class="keyword">target</span>.getClass().getName());</span><br><span class="line">               sb.append(method.getName());</span><br><span class="line">               <span class="keyword">for</span> (Object obj : params) &#123;</span><br><span class="line">                   sb.append(obj.toString());</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="function"><span class="keyword">return</span> sb.<span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
@@ -537,7 +537,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -562,7 +562,7 @@
                       
                     
                     <span class="site-state-item-count">5</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
@@ -630,7 +630,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
 
 
 
@@ -782,5 +782,7 @@
 
   
 
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
 </body>
 </html>
