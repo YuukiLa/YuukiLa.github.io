@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="Function功能型函数式接口Function接口接收一个参数T，返回一个参数R。 12345678910111213141516171819    static int getResult(int value,Function&amp;lt;Integer,Integer&amp;gt; fun)&amp;#123;        return fun.apply(value);    &amp;#125;    // an">
-<meta name="keywords" content="java8">
+  <meta name="description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
+<meta name="keywords" content="springcloud">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java8 函数式接口学习">
-<meta property="og:url" content="https://yuuki80code.github.io/2018/10/25/java8-函数式接口学习/index.html">
+<meta property="og:title" content="SpringCloud 学习之 Feign">
+<meta property="og:url" content="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="Function功能型函数式接口Function接口接收一个参数T，返回一个参数R。 12345678910111213141516171819    static int getResult(int value,Function&amp;lt;Integer,Integer&amp;gt; fun)&amp;#123;        return fun.apply(value);    &amp;#125;    // an">
+<meta property="og:description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-25T03:42:39.756Z">
+<meta property="og:updated_time" content="2018-11-27T13:13:03.475Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java8 函数式接口学习">
-<meta name="twitter:description" content="Function功能型函数式接口Function接口接收一个参数T，返回一个参数R。 12345678910111213141516171819    static int getResult(int value,Function&amp;lt;Integer,Integer&amp;gt; fun)&amp;#123;        return fun.apply(value);    &amp;#125;    // an">
+<meta name="twitter:title" content="SpringCloud 学习之 Feign">
+<meta name="twitter:description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/2018/10/25/java8-函数式接口学习/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>java8 函数式接口学习 | Yuuki Blog</title>
+  <title>SpringCloud 学习之 Feign | Yuuki Blog</title>
   
 
 
@@ -335,7 +335,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/10/25/java8-函数式接口学习/">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
@@ -352,7 +352,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java8 函数式接口学习
+          <h1 class="post-title" itemprop="name headline">SpringCloud 学习之 Feign
               
             
           </h1>
@@ -377,7 +377,7 @@
                 
               
 
-              <time title="创建时间：2018-10-25 11:24:16 / 修改时间：11:42:39" itemprop="dateCreated datePublished" datetime="2018-10-25T11:24:16+08:00">2018-10-25</time>
+              <time title="创建时间：2018-11-27 20:54:32 / 修改时间：21:13:03" itemprop="dateCreated datePublished" datetime="2018-11-27T20:54:32+08:00">2018-11-27</time>
             
 
             
@@ -415,17 +415,20 @@
       
 
       
-        <h4 id="Function功能型函数式接口"><a href="#Function功能型函数式接口" class="headerlink" title="Function功能型函数式接口"></a>Function功能型函数式接口</h4><p>Function接口接收一个参数T，返回一个参数R。</p>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    static <span class="built_in">int</span> getResult(<span class="built_in">int</span> <span class="keyword">value</span>,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,<span class="keyword">Integer</span>&gt; fun)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> fun.apply(<span class="keyword">value</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // andThen <span class="keyword">value</span>作为fun1的参数，得出的结果再作为fun2的参数</span><br><span class="line">    static String getResultAndThen(<span class="built_in">int</span> <span class="keyword">value</span>,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,<span class="keyword">Integer</span>&gt; fun1,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,String&gt; fun2)&#123;</span><br><span class="line">        <span class="keyword">return</span> fun1.andThen(fun2).apply(<span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> static void main(String args[])&#123;</span><br><span class="line">//        <span class="built_in">int</span> num = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        System.<span class="keyword">out</span>.println(getResult(<span class="number">1</span>, (x) -&gt; x + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.<span class="keyword">out</span>.println(getResultAndThen(<span class="number">1</span>, (x) -&gt; x + <span class="number">1</span>, (x) -&gt; x + <span class="string">"s"</span>));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><em>andThen</em> Function1的结果作为Function2的参数</p>
-<h4 id="Consumer消费型函数式接口"><a href="#Consumer消费型函数式接口" class="headerlink" title="Consumer消费型函数式接口"></a>Consumer消费型函数式接口</h4><p>Consumer接口，接收一个参数但是无返回值</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">consumer</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span>, Consumer&lt;Integer&gt; consumer</span>)</span>&#123;</span><br><span class="line">    consumer.accept(<span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args[]</span>)</span>&#123;</span><br><span class="line">    consumer(<span class="number">1</span>,(x)-&gt; System.<span class="keyword">out</span>.println(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>说实话，我不知道这个接口干嘛用- -</p>
-<h4 id="Predicate断言型函数式接口"><a href="#Predicate断言型函数式接口" class="headerlink" title="Predicate断言型函数式接口"></a>Predicate断言型函数式接口</h4><p>Predicate接口接收一个参数，返回一个布尔值</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> boolean <span class="title">assest</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span>, Predicate&lt;Integer&gt; predicate</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> predicate.test(<span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args[]</span>)</span>&#123;</span><br><span class="line">    System.<span class="keyword">out</span>.println(assest(<span class="number">2</span>, (x) -&gt; x % <span class="number">2</span> == <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Supplier供给型函数式接口"><a href="#Supplier供给型函数式接口" class="headerlink" title="Supplier供给型函数式接口"></a>Supplier供给型函数式接口</h4><p>Supplier接口，无参数，返回一个结果</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">List</span><span class="meta">&lt;?</span>&gt; getBean(Supplier<span class="meta">&lt;?</span>&gt; supplier)&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">List</span><span class="meta">&lt;?</span>&gt;) supplier.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> void main(String args[])&#123;</span><br><span class="line">    System.out.println(getBean(() -&gt; Arrays.asList(<span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>呀，先学个大概吧，实际项目中感觉用不太到- -用到再说吧~就酱！</p>
+        <p>学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。</p>
+<h3 id="把Feign引入"><a href="#把Feign引入" class="headerlink" title="把Feign引入"></a>把Feign引入</h3><a id="more"></a>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我用的cloud版本是比较新的，所以feign改成了openfeign，根据版本选择吧</p>
+<h3 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h3><p>跟Eureka一样，先在启动类上加上注解<code>@EnableFeignClients</code></p>
+<p>然后写个接口<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@FeignClient</span>(name = <span class="string">"PROVIDE"</span>)</span><br><span class="line">public interface MsgClient &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GetMapping</span>(<span class="string">"/msg"</span>)</span><br><span class="line">    String getMsg();</span><br><span class="line"></span><br><span class="line">    <span class="variable">@PostMapping</span>(<span class="string">"/param"</span>)</span><br><span class="line">    String getMsgAndParam(<span class="variable">@RequestParam</span>(value = <span class="string">"param"</span>) String param);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>@FeignClient</code>注解调用的服务，name就是需要调用的服务的名字，不区分大小写</li>
+<li>方法上可以使用<code>@GetMapping</code>，<code>@PostMapping</code>等注解来映射服务url</li>
+<li>参数可以使用<code>@RequestParam</code>等spring mvc使用的注解，但是value之一定要指定！</li>
+</ul>
+<p>最后将接口注入到需要调用的地方就好了，比如，简单的<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    MsgClient msgClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(<span class="meta-string">"/msg"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> String getMsg()&#123;</span><br><span class="line">        <span class="keyword">return</span> msgClient.getMsg();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(<span class="meta-string">"/param"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> String getMsgAndParam(String param)&#123;</span><br><span class="line">        <span class="keyword">return</span> msgClient.getMsgAndParam(param);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>虽然我觉得吧，这样好像要写两遍接口…不是更麻烦吗= =，看到了有一个教程说，Feign的接口应该由服务提供方编写，然后服务消费者来引用就好了，想想好像也就复制粘贴的事，还是没法太理解啊~</p>
+<h3 id="附上前篇忘记加的东西"><a href="#附上前篇忘记加的东西" class="headerlink" title="附上前篇忘记加的东西"></a>附上前篇忘记加的东西</h3><p><a href="https://github.com/yuuki80code/cloud" target="_blank" rel="noopener">demo 地址</a></p>
 
       
     </div>
@@ -449,7 +452,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java8/" rel="tag"><i class="fa fa-tag"></i> java8</a>
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
           
         </div>
       
@@ -462,8 +465,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/17/Vue学习之-bus状态管理/" rel="next" title="Vue学习之 bus状态管理">
-                <i class="fa fa-chevron-left"></i> Vue学习之 bus状态管理
+              <a href="/2018/11/21/SpringCloud-学习之-Ribbon负载均衡/" rel="next" title="SpringCloud-学习之-Ribbon负载均衡">
+                <i class="fa fa-chevron-left"></i> SpringCloud-学习之-Ribbon负载均衡
               </a>
             
           </div>
@@ -471,10 +474,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/16/SpringCloud-学习之-Eureka/" rel="prev" title="SpringCloud 学习之 Eureka">
-                SpringCloud 学习之 Eureka <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -620,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Function功能型函数式接口"><span class="nav-number">1.</span> <span class="nav-text">Function功能型函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer消费型函数式接口"><span class="nav-number">2.</span> <span class="nav-text">Consumer消费型函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Predicate断言型函数式接口"><span class="nav-number">3.</span> <span class="nav-text">Predicate断言型函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Supplier供给型函数式接口"><span class="nav-number">4.</span> <span class="nav-text">Supplier供给型函数式接口</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#把Feign引入"><span class="nav-number">1.</span> <span class="nav-text">把Feign引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Feign"><span class="nav-number">2.</span> <span class="nav-text">使用Feign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附上前篇忘记加的东西"><span class="nav-number">3.</span> <span class="nav-text">附上前篇忘记加的东西</span></a></li></ol></div>
             
 
           </div>
