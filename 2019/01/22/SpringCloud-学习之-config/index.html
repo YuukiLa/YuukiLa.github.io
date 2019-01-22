@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。用了poolFactor嘛，所以pom文件要加一下12345 &amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.apache.commons&amp;lt;/group">
-<meta name="keywords" content="Spring Boot,Redis">
+  <meta name="description" content="啊啊啊啊好久没学习了！🤣这段时间我在干什么！！！ Spring Cloud Config就是把配置文件用git或者svn统一管理起来，好处多多比如…   集中管理微服务配置，当微服务数量众多的时候，使用这种方式会更为方便 通过Git管理微服务配置，方便追踪配置修改记录 可以在应用运行期间修改配置，微服务能够自动更新配置 摘录自mrbird.cc">
+<meta name="keywords" content="springcloud">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Boot2.0 自定义redisCacheManager">
-<meta property="og:url" content="https://yuuki80code.github.io/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/index.html">
+<meta property="og:title" content="SpringCloud 学习之 config">
+<meta property="og:url" content="https://yuuki80code.github.io/2019/01/22/SpringCloud-学习之-config/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。用了poolFactor嘛，所以pom文件要加一下12345 &amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.apache.commons&amp;lt;/group">
+<meta property="og:description" content="啊啊啊啊好久没学习了！🤣这段时间我在干什么！！！ Spring Cloud Config就是把配置文件用git或者svn统一管理起来，好处多多比如…   集中管理微服务配置，当微服务数量众多的时候，使用这种方式会更为方便 通过Git管理微服务配置，方便追踪配置修改记录 可以在应用运行期间修改配置，微服务能够自动更新配置 摘录自mrbird.cc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-16T09:06:08.000Z">
+<meta property="og:updated_time" content="2019-01-22T13:12:58.603Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Boot2.0 自定义redisCacheManager">
-<meta name="twitter:description" content="Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。用了poolFactor嘛，所以pom文件要加一下12345 &amp;lt;dependency&amp;gt;	&amp;lt;groupId&amp;gt;org.apache.commons&amp;lt;/group">
+<meta name="twitter:title" content="SpringCloud 学习之 config">
+<meta name="twitter:description" content="啊啊啊啊好久没学习了！🤣这段时间我在干什么！！！ Spring Cloud Config就是把配置文件用git或者svn统一管理起来，好处多多比如…   集中管理微服务配置，当微服务数量众多的时候，使用这种方式会更为方便 通过Git管理微服务配置，方便追踪配置修改记录 可以在应用运行期间修改配置，微服务能够自动更新配置 摘录自mrbird.cc">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2019/01/22/SpringCloud-学习之-config/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>Spring Boot2.0 自定义redisCacheManager | Yuuki Blog</title>
+  <title>SpringCloud 学习之 config | Yuuki Blog</title>
   
 
 
@@ -335,7 +335,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/01/22/SpringCloud-学习之-config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
@@ -352,7 +352,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring Boot2.0 自定义redisCacheManager
+          <h1 class="post-title" itemprop="name headline">SpringCloud 学习之 config
               
             
           </h1>
@@ -377,7 +377,7 @@
                 
               
 
-              <time title="创建时间：2018-06-16 16:37:07 / 修改时间：17:06:08" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">2018-06-16</time>
+              <time title="创建时间：2019-01-22 20:00:13 / 修改时间：21:12:58" itemprop="dateCreated datePublished" datetime="2019-01-22T20:00:13+08:00">2019-01-22</time>
             
 
             
@@ -396,8 +396,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" itemprop="commentCount"></span>
+                <a href="/2019/01/22/SpringCloud-学习之-config/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/22/SpringCloud-学习之-config/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -405,7 +405,7 @@
 
           
           
-             <span id="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" class="leancloud_visitors" data-flag-title="Spring Boot2.0 自定义redisCacheManager">
+             <span id="/2019/01/22/SpringCloud-学习之-config/" class="leancloud_visitors" data-flag-title="SpringCloud 学习之 config">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -436,16 +436,43 @@
       
 
       
-        <p>Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。<br>提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。<br>用了poolFactor嘛，所以pom文件要加一下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>好像cacheManager不提供设置默认的缓存过期时间等设置（当然也有可能我没发现- -）。<br>所以我用了RedisCacheConfiguration来设置默认的缓存过期时间，具体代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 缓存管理器</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">CacheManager <span class="title">cacheManager</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 初始化一个RedisCacheWriter</span></span><br><span class="line">       RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">       <span class="comment">// 设置缓存过期时间（秒）</span></span><br><span class="line">       RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">               .entryTtl(Duration.ofSeconds(<span class="number">1800</span>));</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> RedisCacheManager(cacheWriter,redisCacheConfiguration);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>当然，自定义key的生成策略跟自定义序列化跟之前差不多，看代码:</p>
-<ul>
-<li><p>修改默认的序列化方式 </p>
-<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改默认的序列化方式</span></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">   <span class="keyword">public</span> RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       RedisTemplate&lt;Object, Object&gt; <span class="keyword">template</span> = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(StringRedisTemplate.<span class="keyword">class</span>)</span><br><span class="line">   <span class="keyword">public</span> StringRedisTemplate stringRedisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       StringRedisTemplate <span class="keyword">template</span> = <span class="keyword">new</span> StringRedisTemplate();</span><br><span class="line">       setSerializer(<span class="keyword">template</span>);</span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> setSerializer(StringRedisTemplate <span class="keyword">template</span>) &#123;</span><br><span class="line">       <span class="keyword">@SuppressWarnings</span>(&#123; <span class="string">"rawtypes"</span>, <span class="string">"unchecked"</span> &#125;)</span><br><span class="line">       Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer(Object.<span class="keyword">class</span>);</span><br><span class="line">       ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">       om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">       om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">       jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">       <span class="keyword">template</span>.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+        <p>啊啊啊啊好久没学习了！🤣这段时间我在干什么！！！</p>
+<h3 id="Spring-Cloud-Config"><a href="#Spring-Cloud-Config" class="headerlink" title="Spring Cloud Config"></a>Spring Cloud Config</h3><p>就是把配置文件用git或者svn统一管理起来，好处多多比如…</p>
+<blockquote>
+<ol>
+<li>集中管理微服务配置，当微服务数量众多的时候，使用这种方式会更为方便</li>
+<li>通过Git管理微服务配置，方便追踪配置修改记录</li>
+<li><p>可以在应用运行期间修改配置，微服务能够自动更新配置</p>
+<p>摘录自mrbird.cc</p>
 </li>
-<li><p>自定义key生成策略</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义缓存key生成策略</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">KeyGenerator <span class="title">keyGenerator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="function">Object <span class="title">generate</span><span class="params">(Object <span class="keyword">target</span>, java.lang.reflect.Method method, Object... params)</span> </span>&#123;</span><br><span class="line">               StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">               sb.append(<span class="keyword">target</span>.getClass().getName());</span><br><span class="line">               sb.append(method.getName());</span><br><span class="line">               <span class="keyword">for</span> (Object obj : params) &#123;</span><br><span class="line">                   sb.append(obj.toString());</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="function"><span class="keyword">return</span> sb.<span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h3 id="创建config-server"><a href="#创建config-server" class="headerlink" title="创建config-server"></a>创建config-server</h3><p>还是从引入依赖开始…<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后写配置文件加注解= =老套路<br>yml：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">9999</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">config</span></span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line"><span class="attr">    config:</span></span><br><span class="line"><span class="attr">      server:</span></span><br><span class="line"><span class="attr">        git:</span></span><br><span class="line"><span class="attr">          uri:</span> <span class="attr">https://git.coding.net/xxx/config.git</span></span><br><span class="line"><span class="attr">          username:</span> <span class="string">xxx</span></span><br><span class="line"><span class="attr">          password:</span> <span class="string">xxx</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://127.0.0.1:8761/eureka/</span></span><br></pre></td></tr></table></figure></p>
+<p>在启动类上加上<code>@EnableDiscoveryClient</code>和<code>@EnableConfigServer</code>,因为配置中心本身也是一个服务嘛，当然要注册到eureka上啦，然后EnableConfigServer标记这是配置中心的服务</p>
+<p>yml的的配置说明（emmm有点多挑点重点记一下就好…前缀spring.cloud.config.server.git）：</p>
+<ol>
+<li>uri: 仓库地址</li>
+<li>username： 仓库用户名</li>
+<li>password： 仓库密码 <strong>划重点！我Git的密码最后是小数点所以死活连不上，有解决办法的大佬请联系我！</strong></li>
+</ol>
+<p>然后在任意平台新建git仓库，传几个配置文件,比如<strong>eureka-dev.yml</strong></p>
+<p>然后放问url<code>http://localhost:9999/eureka-dev.yml</code>就能看到配置文件了，可以多传几个看看，我懒</p>
+<p>url格式：</p>
+<blockquote>
+<p>/{name}-{profile}.yml <br><br>/{label}/{name}-{profile}.yml  label是分支名</p>
+</blockquote>
+<h3 id="创建config-client"><a href="#创建config-client" class="headerlink" title="创建config-client"></a>创建config-client</h3><p>改造一下之前的provide项目，在pom文件里面添加config-client的依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>修改yml配置，添加：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cloud:</span></span><br><span class="line"><span class="attr">    config:</span></span><br><span class="line"><span class="attr">      discovery:</span></span><br><span class="line"><span class="attr">        enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">        service-id:</span> <span class="string">CONFIG</span>  <span class="comment">#找eureka...也可以用uri</span></span><br><span class="line"><span class="attr">      profile:</span> <span class="string">dev</span>  <span class="comment">#dev环境的配置</span></span><br><span class="line">      <span class="comment">#uri: config地址</span></span><br><span class="line">      <span class="comment">#label： 分支名</span></span><br></pre></td></tr></table></figure></p>
+<p>🐇 记得把<code>application.yml</code> 改成<code>bootstrap.yml</code></p>
+<p>事先在git上传了两个配置，分别是provide-dev.yml和provide-test.yml,里面只配置了一个字段env，写个接口试试有没有正确拉取到<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Value(<span class="meta-string">"<span class="subst">$&#123;env&#125;</span>"</span>)</span></span><br><span class="line">String env;</span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping(<span class="meta-string">"/env"</span>)</span></span><br><span class="line"><span class="keyword">public</span> String getEnv()&#123;</span><br><span class="line">    <span class="keyword">return</span> env;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启动后访问<code>/env</code>正确返回dev，把profile改成test，重启后刷新页面返回的是test，说明已经从配置中心拉取到配置了</p>
+<h3 id="一些值得记一下的东西"><a href="#一些值得记一下的东西" class="headerlink" title="一些值得记一下的东西"></a>一些值得记一下的东西</h3><ol>
+<li>config-server 可以配置xxx.git.basedir 来配置git拉取下来放在哪</li>
+<li>如果git仓库有provide.yml、provide-dev.yml和provide-test.yml的话，拉取dev或者test配置的时候会把provide也拉取下来合并，所以provide里面可以放公共的配置<br>…</li>
+</ol>
+<p>自动配置刷新留着下次…</p>
 
       
     </div>
@@ -469,9 +496,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spring-Boot/" rel="tag"><i class="fa fa-tag"></i> Spring Boot</a>
-          
-            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
           
         </div>
       
@@ -484,8 +509,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/07/第一篇/" rel="next" title="第一篇">
-                <i class="fa fa-chevron-left"></i> 第一篇
+              <a href="/2018/12/17/SpringCloud-学习之-Zuul/" rel="next" title="SpringCloud 学习之 Zuul">
+                <i class="fa fa-chevron-left"></i> SpringCloud 学习之 Zuul
               </a>
             
           </div>
@@ -493,10 +518,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/23/毕业了/" rel="prev" title="毕业了">
-                毕业了 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -544,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -626,6 +656,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Cloud-Config"><span class="nav-number">1.</span> <span class="nav-text">Spring Cloud Config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建config-server"><span class="nav-number">2.</span> <span class="nav-text">创建config-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建config-client"><span class="nav-number">3.</span> <span class="nav-text">创建config-client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些值得记一下的东西"><span class="nav-number">4.</span> <span class="nav-text">一些值得记一下的东西</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
