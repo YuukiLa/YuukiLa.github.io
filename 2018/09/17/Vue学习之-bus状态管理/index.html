@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &apos;vue&apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.vue 在emil.">
+  <meta name="description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &amp;apos;vue&amp;apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.">
 <meta name="keywords" content="vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue学习之 bus状态管理">
 <meta property="og:url" content="https://yuuki80code.github.io/2018/09/17/Vue学习之-bus状态管理/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &apos;vue&apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.vue 在emil.">
+<meta property="og:description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &amp;apos;vue&amp;apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-09-17T12:55:35.800Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue学习之 bus状态管理">
-<meta name="twitter:description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &apos;vue&apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.vue 在emil.">
+<meta name="twitter:description" content="vue使用bus来进行组件间通讯（兄弟组件之间） 新建一个 js bus.js1234import Vue from &amp;apos;vue&amp;apos;const bus = new Vue()export default bus 作为通讯的中间媒介 在main.js中修改vue的prototype1Vue.prototype.$bus = bus 简单使用准备两个组件，比如emil.vue和tel.">
 
 
 
@@ -437,14 +437,14 @@
 
       
         <p>vue使用bus来进行组件间通讯（兄弟组件之间）</p>
-<h4 id="新建一个-js-bus-js"><a href="#新建一个-js-bus-js" class="headerlink" title="新建一个 js bus.js"></a>新建一个 js <code>bus.js</code></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bus = <span class="keyword">new</span> Vue()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> bus</span><br></pre></td></tr></table></figure>
+<h4 id="新建一个-js-bus-js"><a href="#新建一个-js-bus-js" class="headerlink" title="新建一个 js bus.js"></a>新建一个 js <code>bus.js</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line"></span><br><span class="line">const bus = new Vue()</span><br><span class="line">export default bus</span><br></pre></td></tr></table></figure>
 <p>作为通讯的中间媒介</p>
-<h4 id="在main-js中修改vue的prototype"><a href="#在main-js中修改vue的prototype" class="headerlink" title="在main.js中修改vue的prototype"></a>在main.js中修改vue的prototype</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue<span class="selector-class">.prototype</span>.<span class="variable">$bus</span> = bus</span><br></pre></td></tr></table></figure>
+<h4 id="在main-js中修改vue的prototype"><a href="#在main-js中修改vue的prototype" class="headerlink" title="在main.js中修改vue的prototype"></a>在main.js中修改vue的prototype</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$bus = bus</span><br></pre></td></tr></table></figure>
 <h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><p>准备两个组件，比如emil.vue和tel.vue</p>
 <p>在emil.vue 里面，写一个button，并且给一个点击事件,触发后执行</p>
 <p><code>this.$bus.$emit(&#39;on-click&#39;,&#39;vue bus state manager&#39;)</code></p>
 <p>在tel.vue里显示一个message，并在mounted事件里面执行</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$bus.$on(<span class="string">'on-click'</span>,msg=&gt;&#123;</span><br><span class="line">  <span class="keyword">this</span>.message = msg</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.$bus.$on(&apos;on-click&apos;,msg=&gt;&#123;</span><br><span class="line">  this.message = msg</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>点击emil.vue里面得按钮后，改变tel.vue里面得message的值</p>
 <h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><blockquote>
 <p>$emit 可以触发当前实例上的事件，附加的参数会传递给监听器回调<br><br>$on 监听当前实例上的自定义事件。事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。</p>
@@ -571,7 +571,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

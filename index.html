@@ -331,6 +331,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/03/15/Spring-Cloud-学习之-自动刷新配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">Spring Cloud 学习之 自动刷新配置</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-15 12:32:38 / 修改时间：13:25:56" itemprop="dateCreated datePublished" datetime="2019-03-15T12:32:38+08:00">2019-03-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/" class="leancloud_visitors" data-flag-title="Spring Cloud 学习之 自动刷新配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>上回书说到…说到如何从配置中心拉取配置，遗留问题就是当我们更新git上的配置文件时其实服务是没办法实时更新的，其实spring cloud提供了很多种刷新配置的方法，学习下！<br></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/01/22/SpringCloud-学习之-config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1477,15 +1646,15 @@
         
           
             <h4 id="Function功能型函数式接口"><a href="#Function功能型函数式接口" class="headerlink" title="Function功能型函数式接口"></a>Function功能型函数式接口</h4><p>Function接口接收一个参数T，返回一个参数R。</p>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    static <span class="built_in">int</span> getResult(<span class="built_in">int</span> <span class="keyword">value</span>,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,<span class="keyword">Integer</span>&gt; fun)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> fun.apply(<span class="keyword">value</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // andThen <span class="keyword">value</span>作为fun1的参数，得出的结果再作为fun2的参数</span><br><span class="line">    static String getResultAndThen(<span class="built_in">int</span> <span class="keyword">value</span>,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,<span class="keyword">Integer</span>&gt; fun1,<span class="function"><span class="keyword">Function</span></span>&lt;<span class="keyword">Integer</span>,String&gt; fun2)&#123;</span><br><span class="line">        <span class="keyword">return</span> fun1.andThen(fun2).apply(<span class="keyword">value</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> static void main(String args[])&#123;</span><br><span class="line">//        <span class="built_in">int</span> num = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        System.<span class="keyword">out</span>.println(getResult(<span class="number">1</span>, (x) -&gt; x + <span class="number">1</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.<span class="keyword">out</span>.println(getResultAndThen(<span class="number">1</span>, (x) -&gt; x + <span class="number">1</span>, (x) -&gt; x + <span class="string">"s"</span>));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    static int getResult(int value,Function&lt;Integer,Integer&gt; fun)&#123;</span><br><span class="line"></span><br><span class="line">        return fun.apply(value);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // andThen value作为fun1的参数，得出的结果再作为fun2的参数</span><br><span class="line">    static String getResultAndThen(int value,Function&lt;Integer,Integer&gt; fun1,Function&lt;Integer,String&gt; fun2)&#123;</span><br><span class="line">        return fun1.andThen(fun2).apply(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String args[])&#123;</span><br><span class="line">//        int num = 1;</span><br><span class="line"></span><br><span class="line">        System.out.println(getResult(1, (x) -&gt; x + 1));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.out.println(getResultAndThen(1, (x) -&gt; x + 1, (x) -&gt; x + &quot;s&quot;));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><em>andThen</em> Function1的结果作为Function2的参数</p>
 <h4 id="Consumer消费型函数式接口"><a href="#Consumer消费型函数式接口" class="headerlink" title="Consumer消费型函数式接口"></a>Consumer消费型函数式接口</h4><p>Consumer接口，接收一个参数但是无返回值</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">consumer</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span>, Consumer&lt;Integer&gt; consumer</span>)</span>&#123;</span><br><span class="line">    consumer.accept(<span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args[]</span>)</span>&#123;</span><br><span class="line">    consumer(<span class="number">1</span>,(x)-&gt; System.<span class="keyword">out</span>.println(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static void consumer(int value, Consumer&lt;Integer&gt; consumer)&#123;</span><br><span class="line">    consumer.accept(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    consumer(1,(x)-&gt; System.out.println(x));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>说实话，我不知道这个接口干嘛用- -</p>
 <h4 id="Predicate断言型函数式接口"><a href="#Predicate断言型函数式接口" class="headerlink" title="Predicate断言型函数式接口"></a>Predicate断言型函数式接口</h4><p>Predicate接口接收一个参数，返回一个布尔值</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> boolean <span class="title">assest</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span>, Predicate&lt;Integer&gt; predicate</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> predicate.test(<span class="keyword">value</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String args[]</span>)</span>&#123;</span><br><span class="line">    System.<span class="keyword">out</span>.println(assest(<span class="number">2</span>, (x) -&gt; x % <span class="number">2</span> == <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static boolean assest(int value, Predicate&lt;Integer&gt; predicate)&#123;</span><br><span class="line">    return predicate.test(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    System.out.println(assest(2, (x) -&gt; x % 2 == 1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="Supplier供给型函数式接口"><a href="#Supplier供给型函数式接口" class="headerlink" title="Supplier供给型函数式接口"></a>Supplier供给型函数式接口</h4><p>Supplier接口，无参数，返回一个结果</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">List</span><span class="meta">&lt;?</span>&gt; getBean(Supplier<span class="meta">&lt;?</span>&gt; supplier)&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">List</span><span class="meta">&lt;?</span>&gt;) supplier.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> void main(String args[])&#123;</span><br><span class="line">    System.out.println(getBean(() -&gt; Arrays.asList(<span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static List&lt;?&gt; getBean(Supplier&lt;?&gt; supplier)&#123;</span><br><span class="line">    return (List&lt;?&gt;) supplier.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void main(String args[])&#123;</span><br><span class="line">    System.out.println(getBean(() -&gt; Arrays.asList(new Integer[]&#123;1, 2, 3, 4, 5&#125;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>呀，先学个大概吧，实际项目中感觉用不太到- -用到再说吧~就酱！</p>
 
           
@@ -1650,14 +1819,14 @@
         
           
             <p>vue使用bus来进行组件间通讯（兄弟组件之间）</p>
-<h4 id="新建一个-js-bus-js"><a href="#新建一个-js-bus-js" class="headerlink" title="新建一个 js bus.js"></a>新建一个 js <code>bus.js</code></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bus = <span class="keyword">new</span> Vue()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> bus</span><br></pre></td></tr></table></figure>
+<h4 id="新建一个-js-bus-js"><a href="#新建一个-js-bus-js" class="headerlink" title="新建一个 js bus.js"></a>新建一个 js <code>bus.js</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line"></span><br><span class="line">const bus = new Vue()</span><br><span class="line">export default bus</span><br></pre></td></tr></table></figure>
 <p>作为通讯的中间媒介</p>
-<h4 id="在main-js中修改vue的prototype"><a href="#在main-js中修改vue的prototype" class="headerlink" title="在main.js中修改vue的prototype"></a>在main.js中修改vue的prototype</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue<span class="selector-class">.prototype</span>.<span class="variable">$bus</span> = bus</span><br></pre></td></tr></table></figure>
+<h4 id="在main-js中修改vue的prototype"><a href="#在main-js中修改vue的prototype" class="headerlink" title="在main.js中修改vue的prototype"></a>在main.js中修改vue的prototype</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$bus = bus</span><br></pre></td></tr></table></figure>
 <h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><p>准备两个组件，比如emil.vue和tel.vue</p>
 <p>在emil.vue 里面，写一个button，并且给一个点击事件,触发后执行</p>
 <p><code>this.$bus.$emit(&#39;on-click&#39;,&#39;vue bus state manager&#39;)</code></p>
 <p>在tel.vue里显示一个message，并在mounted事件里面执行</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$bus.$on(<span class="string">'on-click'</span>,msg=&gt;&#123;</span><br><span class="line">  <span class="keyword">this</span>.message = msg</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.$bus.$on(&apos;on-click&apos;,msg=&gt;&#123;</span><br><span class="line">  this.message = msg</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>点击emil.vue里面得按钮后，改变tel.vue里面得message的值</p>
 <h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><blockquote>
 <p>$emit 可以触发当前实例上的事件，附加的参数会传递给监听器回调<br><br>$on 监听当前实例上的自定义事件。事件可以由vm.$emit触发。回调函数会接收所有传入事件触发函数的额外参数。</p>
@@ -1886,178 +2055,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yuuki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yuuki Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">Spring Boot2.0 自定义redisCacheManager</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-06-16 16:37:07 / 修改时间：17:06:08" itemprop="dateCreated datePublished" datetime="2018-06-16T16:37:07+08:00">2018-06-16</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" class="leancloud_visitors" data-flag-title="Spring Boot2.0 自定义redisCacheManager">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Spring Boot2.0 取消了使用RedisTemplate来构建CacheManager。<br>提供了RedisCacheManager.create(poolFactor) 方法来创建cacheManager。<br>用了poolFactor嘛，所以pom文件要加一下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>好像cacheManager不提供设置默认的缓存过期时间等设置（当然也有可能我没发现- -）。<br>所以我用了RedisCacheConfiguration来设置默认的缓存过期时间，具体代码如下：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 缓存管理器</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">CacheManager <span class="title">cacheManager</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 初始化一个RedisCacheWriter</span></span><br><span class="line">       RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);</span><br><span class="line">       <span class="comment">// 设置缓存过期时间（秒）</span></span><br><span class="line">       RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()</span><br><span class="line">               .entryTtl(Duration.ofSeconds(<span class="number">1800</span>));</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> RedisCacheManager(cacheWriter,redisCacheConfiguration);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>当然，自定义key的生成策略跟自定义序列化跟之前差不多，看代码:</p>
-<ul>
-<li><p>修改默认的序列化方式 </p>
-<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 修改默认的序列化方式</span></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(name = <span class="string">"redisTemplate"</span>)</span><br><span class="line">   <span class="keyword">public</span> RedisTemplate&lt;Object, Object&gt; redisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       RedisTemplate&lt;Object, Object&gt; <span class="keyword">template</span> = <span class="keyword">new</span> RedisTemplate&lt;&gt;();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">@Bean</span></span><br><span class="line">   <span class="keyword">@ConditionalOnMissingBean</span>(StringRedisTemplate.<span class="keyword">class</span>)</span><br><span class="line">   <span class="keyword">public</span> StringRedisTemplate stringRedisTemplate(</span><br><span class="line">           RedisConnectionFactory redisConnectionFactory) throws UnknownHostException &#123;</span><br><span class="line">       StringRedisTemplate <span class="keyword">template</span> = <span class="keyword">new</span> StringRedisTemplate();</span><br><span class="line">       setSerializer(<span class="keyword">template</span>);</span><br><span class="line">       <span class="keyword">template</span>.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">template</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> setSerializer(StringRedisTemplate <span class="keyword">template</span>) &#123;</span><br><span class="line">       <span class="keyword">@SuppressWarnings</span>(&#123; <span class="string">"rawtypes"</span>, <span class="string">"unchecked"</span> &#125;)</span><br><span class="line">       Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = <span class="keyword">new</span> Jackson2JsonRedisSerializer(Object.<span class="keyword">class</span>);</span><br><span class="line">       ObjectMapper om = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">       om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">       om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">       jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">       <span class="keyword">template</span>.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自定义key生成策略</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义缓存key生成策略</span></span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function">KeyGenerator <span class="title">keyGenerator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="keyword">public</span> <span class="function">Object <span class="title">generate</span><span class="params">(Object <span class="keyword">target</span>, java.lang.reflect.Method method, Object... params)</span> </span>&#123;</span><br><span class="line">               StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">               sb.append(<span class="keyword">target</span>.getClass().getName());</span><br><span class="line">               sb.append(method.getName());</span><br><span class="line">               <span class="keyword">for</span> (Object obj : params) &#123;</span><br><span class="line">                   sb.append(obj.toString());</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="function"><span class="keyword">return</span> sb.<span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2105,7 +2102,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
