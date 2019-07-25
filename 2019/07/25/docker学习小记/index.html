@@ -107,25 +107,25 @@
 
 
 
-  <meta name="description" content="上回书说到…说到如何从配置中心拉取配置，遗留问题就是当我们更新git上的配置文件时其实服务是没办法实时更新的，其实spring cloud提供了很多种刷新配置的方法，学习下！">
-<meta name="keywords" content="springcloud">
+  <meta name="description" content="最近恶补docker，快看吐了… docker安装不说了这个用yum或者apt简直不要太简单">
+<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Cloud 学习之 自动刷新配置">
-<meta property="og:url" content="https://yuuki80code.github.io/2019/03/15/Spring-Cloud-学习之-自动刷新配置/index.html">
+<meta property="og:title" content="docker学习小记">
+<meta property="og:url" content="https://yuuki80code.github.io/2019/07/25/docker学习小记/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="上回书说到…说到如何从配置中心拉取配置，遗留问题就是当我们更新git上的配置文件时其实服务是没办法实时更新的，其实spring cloud提供了很多种刷新配置的方法，学习下！">
+<meta property="og:description" content="最近恶补docker，快看吐了… docker安装不说了这个用yum或者apt简直不要太简单">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-15T05:25:56.880Z">
+<meta property="og:updated_time" content="2019-07-25T13:21:35.423Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Cloud 学习之 自动刷新配置">
-<meta name="twitter:description" content="上回书说到…说到如何从配置中心拉取配置，遗留问题就是当我们更新git上的配置文件时其实服务是没办法实时更新的，其实spring cloud提供了很多种刷新配置的方法，学习下！">
+<meta name="twitter:title" content="docker学习小记">
+<meta name="twitter:description" content="最近恶补docker，快看吐了… docker安装不说了这个用yum或者apt简直不要太简单">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/2019/03/15/Spring-Cloud-学习之-自动刷新配置/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2019/07/25/docker学习小记/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>Spring Cloud 学习之 自动刷新配置 | Yuuki Blog</title>
+  <title>docker学习小记 | Yuuki Blog</title>
   
 
 
@@ -334,7 +334,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/03/15/Spring-Cloud-学习之-自动刷新配置/">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/07/25/docker学习小记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
@@ -351,7 +351,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring Cloud 学习之 自动刷新配置
+          <h1 class="post-title" itemprop="name headline">docker学习小记
               
             
           </h1>
@@ -376,7 +376,7 @@
                 
               
 
-              <time title="创建时间：2019-03-15 12:32:38 / 修改时间：13:25:56" itemprop="dateCreated datePublished" datetime="2019-03-15T12:32:38+08:00">2019-03-15</time>
+              <time title="创建时间：2019-07-25 17:28:07 / 修改时间：21:21:35" itemprop="dateCreated datePublished" datetime="2019-07-25T17:28:07+08:00">2019-07-25</time>
             
 
             
@@ -395,8 +395,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/" itemprop="commentCount"></span>
+                <a href="/2019/07/25/docker学习小记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/25/docker学习小记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -404,7 +404,7 @@
 
           
           
-             <span id="/2019/03/15/Spring-Cloud-学习之-自动刷新配置/" class="leancloud_visitors" data-flag-title="Spring Cloud 学习之 自动刷新配置">
+             <span id="/2019/07/25/docker学习小记/" class="leancloud_visitors" data-flag-title="docker学习小记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -435,22 +435,50 @@
       
 
       
-        <p>上回书说到…说到如何从配置中心拉取配置，遗留问题就是当我们更新git上的配置文件时其实服务是没办法实时更新的，其实spring cloud提供了很多种刷新配置的方法，学习下！<br><a id="more"></a></p>
-<h3 id="使用bus刷新配置"><a href="#使用bus刷新配置" class="headerlink" title="使用bus刷新配置"></a>使用bus刷新配置</h3><p>上面提到，spring cloud提供了很多种刷新配置的方法，但是我只想记这一种，因为其他的我感觉不实用= =</p>
-<ol>
-<li>安装rabbitmq<br>这个大家想怎么安装就怎么安装了，去官网下载还是用docker随意，我是装在docker里= =</li>
-<li><p>config-server的pom文件里添加依赖,然后再改下yml</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bus-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line"><span class="attr">  endpoints:</span></span><br><span class="line"><span class="attr">    web:</span></span><br><span class="line"><span class="attr">      exposure:</span></span><br><span class="line"><span class="attr">        include:</span> <span class="string">"bus-refresh"</span> <span class="comment">#暴露刷新配置的接口</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">      addresses:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.102</span><span class="string">:5672</span> <span class="comment">#rabbitmq 的地址 等同于 host:port</span></span><br><span class="line"><span class="attr">      host:</span> <span class="string">rabbitmq的ip</span></span><br><span class="line">      <span class="string">port：rabbitmq的端口</span></span><br><span class="line">      <span class="string">username：</span> <span class="string">默认guest</span></span><br><span class="line">      <span class="string">password：</span> <span class="string">默认guest</span></span><br></pre></td></tr></table></figure>
+        <p>最近恶补docker，快看吐了…</p>
+<h3 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h3><p>不说了这个用yum或者apt简直不要太简单</p>
+<a id="more"></a>
+<h3 id="docker基本命令"><a href="#docker基本命令" class="headerlink" title="docker基本命令"></a>docker基本命令</h3><p><a href="https://www.runoob.com/docker/docker-command-manual.html" target="_blank" rel="noopener">这里</a></p>
+<p>抄一次也太烦了吧= =</p>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><ul>
+<li><p>FROM<br>表示基于哪个镜像构建</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jre-alpine <span class="comment">##基于jdk8构建</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>同样修改下config-clent的pom跟yml，yml只需要加上rabbitmq的配置就行了</p>
+<li><p>LABEL</p>
+<p>  写一些镜像介绍，不是必须但是最好还是写写</p>
 </li>
-<li><p>在使用到配置的地方，加上<code>@RefreshScope</code>注解，这样才会刷新！</p>
+<li><p>COPY,ADD</p>
+<p>  COPY跟ADD其实是差不多的功能，都是把东西复制到镜像里面，不过ADD的功能更加强大一些，官方推荐能用COPY就用COPY因为语义清晰</p>
+  <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span> *.jar app.jar ##把jar拷贝到镜像内</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>EXPOSE</p>
+<p>  暴露端口，并不是说写了就真的会开这个端口，只是写一下让人知道而已</p>
+</li>
+<li><p>CMD</p>
+<p>  容器启动后会执行，有两种写法后面说</p>
+</li>
+<li><p>ENTRYPOINT</p>
+<p>  作用跟CMD一样，区别后面说</p>
+</li>
+<li><p>RUN</p>
+<p>  在镜像内执行的命令，装装软件设置下环境变量啥的</p>
+</li>
+<li><p>ENV</p>
+<p>  设置环境变量</p>
+</li>
+<li><p>WORKDIR</p>
+<p>  指定工作目录，如果目录不存在则会创建</p>
+</li>
+</ul>
+<h4 id="CMD和ENTRYPOINT的区别"><a href="#CMD和ENTRYPOINT的区别" class="headerlink" title="CMD和ENTRYPOINT的区别"></a>CMD和ENTRYPOINT的区别</h4><ol>
+<li>CMD的命令会被 docker run 的命令覆盖而ENTRYPOINT不会</li>
+<li>docker run 后的命令会被ENTRYPOINT拼接到后面作为参数</li>
+<li>如果CMD和ENTRYPOINT同时存在的话，CMD的命令会被拼接到ENTRYPOINT后面</li>
 </ol>
-<p>ok，做完上面4步之后启动项目，访问rabbitmq的控制台会发现并没有新的队列出现？？？访问配置中心的 <strong>/actuator/bus-refresh</strong> 接口没效果而且还会报错🙄<br>百度之后发现用的greenwich.m1版本链接rabbitmq会有问题，我丢！修改下父pom，把版本改成greenwich.release问题解决，配置也能正确刷新</p>
-<h3 id="webhooks实现动态更新"><a href="#webhooks实现动态更新" class="headerlink" title="webhooks实现动态更新"></a>webhooks实现动态更新</h3><p>一般git仓库都会提供这个功能，更新的时候去访问到那个刷新接口就好了，现在用不到知道就好了，鬼知道后面她会改成啥样😓</p>
-<p>end…拜拜！</p>
+<h4 id="两种写法"><a href="#两种写法" class="headerlink" title="两种写法"></a>两种写法</h4><p>shell 跟 exec<br>具体看<a href="https://mrbird.cc/Dockerfile.html" target="_blank" rel="noopener">MrBird</a></p>
+<h3 id="还有啥"><a href="#还有啥" class="headerlink" title="还有啥"></a>还有啥</h3><h4 id="e-跟application-yml的碰撞"><a href="#e-跟application-yml的碰撞" class="headerlink" title="-e 跟application.yml的碰撞"></a>-e 跟application.yml的碰撞</h4><p>在yml配置文件里面写<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">env:</span></span><br><span class="line">  <span class="string">$&#123;env&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>启动的时候就可以<code>docker run -e env 你要的env</code>env就设置进去了，这个还是比较有用的- -</p>
+<p>end，后续想到啥了再补上！</p>
 
       
     </div>
@@ -474,7 +502,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
           
         </div>
       
@@ -487,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/22/SpringCloud-学习之-config/" rel="next" title="SpringCloud 学习之 config">
-                <i class="fa fa-chevron-left"></i> SpringCloud 学习之 config
+              <a href="/2019/07/24/gitlab-小记/" rel="next" title="gitlab 小记">
+                <i class="fa fa-chevron-left"></i> gitlab 小记
               </a>
             
           </div>
@@ -496,10 +524,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/24/gitlab-小记/" rel="prev" title="gitlab 小记">
-                gitlab 小记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -652,7 +676,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用bus刷新配置"><span class="nav-number">1.</span> <span class="nav-text">使用bus刷新配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhooks实现动态更新"><span class="nav-number">2.</span> <span class="nav-text">webhooks实现动态更新</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker安装"><span class="nav-number">1.</span> <span class="nav-text">docker安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker基本命令"><span class="nav-number">2.</span> <span class="nav-text">docker基本命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile"><span class="nav-number">3.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CMD和ENTRYPOINT的区别"><span class="nav-number">3.1.</span> <span class="nav-text">CMD和ENTRYPOINT的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两种写法"><span class="nav-number">3.2.</span> <span class="nav-text">两种写法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#还有啥"><span class="nav-number">4.</span> <span class="nav-text">还有啥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#e-跟application-yml的碰撞"><span class="nav-number">4.1.</span> <span class="nav-text">-e 跟application.yml的碰撞</span></a></li></ol></li></ol></div>
             
 
           </div>
