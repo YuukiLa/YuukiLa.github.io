@@ -107,25 +107,25 @@
 
 
 
-  <meta name="description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
-<meta name="keywords" content="springcloud">
+  <meta name="description" content="前记其实本来是不想写的，今天想搞一下发现之前弄的全忘了- -好记性不如烂笔头啊！">
+<meta name="keywords" content="k8s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringCloud 学习之 Feign">
-<meta property="og:url" content="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/index.html">
+<meta property="og:title" content="minikube搭建简单的k8s环境">
+<meta property="og:url" content="https://yuuki80code.github.io/2019/12/05/minikube搭建简单的k8s环境/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
+<meta property="og:description" content="前记其实本来是不想写的，今天想搞一下发现之前弄的全忘了- -好记性不如烂笔头啊！">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-27T13:13:03.475Z">
+<meta property="og:updated_time" content="2019-12-05T13:57:02.142Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringCloud 学习之 Feign">
-<meta name="twitter:description" content="学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。 把Feign引入">
+<meta name="twitter:title" content="minikube搭建简单的k8s环境">
+<meta name="twitter:description" content="前记其实本来是不想写的，今天想搞一下发现之前弄的全忘了- -好记性不如烂笔头啊！">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2019/12/05/minikube搭建简单的k8s环境/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>SpringCloud 学习之 Feign | Yuuki Blog</title>
+  <title>minikube搭建简单的k8s环境 | Yuuki Blog</title>
   
 
 
@@ -334,7 +334,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/11/27/SpringCloud-学习之-Feign/">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/12/05/minikube搭建简单的k8s环境/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
@@ -351,7 +351,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SpringCloud 学习之 Feign
+          <h1 class="post-title" itemprop="name headline">minikube搭建简单的k8s环境
               
             
           </h1>
@@ -376,7 +376,7 @@
                 
               
 
-              <time title="创建时间：2018-11-27 20:54:32 / 修改时间：21:13:03" itemprop="dateCreated datePublished" datetime="2018-11-27T20:54:32+08:00">2018-11-27</time>
+              <time title="创建时间：2019-12-05 21:18:14 / 修改时间：21:57:02" itemprop="dateCreated datePublished" datetime="2019-12-05T21:18:14+08:00">2019-12-05</time>
             
 
             
@@ -395,8 +395,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/11/27/SpringCloud-学习之-Feign/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/27/SpringCloud-学习之-Feign/" itemprop="commentCount"></span>
+                <a href="/2019/12/05/minikube搭建简单的k8s环境/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/12/05/minikube搭建简单的k8s环境/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -404,7 +404,7 @@
 
           
           
-             <span id="/2018/11/27/SpringCloud-学习之-Feign/" class="leancloud_visitors" data-flag-title="SpringCloud 学习之 Feign">
+             <span id="/2019/12/05/minikube搭建简单的k8s环境/" class="leancloud_visitors" data-flag-title="minikube搭建简单的k8s环境">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -435,20 +435,34 @@
       
 
       
-        <p>学习完了如何使用restTemplate调用服务之后，再来看看如何用feign声明式服务调用。</p>
-<h3 id="把Feign引入"><a href="#把Feign引入" class="headerlink" title="把Feign引入"></a>把Feign引入</h3><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<p>我用的cloud版本是比较新的，所以feign改成了openfeign，根据版本选择吧</p>
-<h3 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h3><p>跟Eureka一样，先在启动类上加上注解<code>@EnableFeignClients</code></p>
-<p>然后写个接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@FeignClient(name = &quot;PROVIDE&quot;)</span><br><span class="line">public interface MsgClient &#123;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/msg&quot;)</span><br><span class="line">    String getMsg();</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/param&quot;)</span><br><span class="line">    String getMsgAndParam(@RequestParam(value = &quot;param&quot;) String param);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><code>@FeignClient</code>注解调用的服务，name就是需要调用的服务的名字，不区分大小写</li>
-<li>方法上可以使用<code>@GetMapping</code>，<code>@PostMapping</code>等注解来映射服务url</li>
-<li>参数可以使用<code>@RequestParam</code>等spring mvc使用的注解，但是value之一定要指定！</li>
-</ul>
-<p>最后将接口注入到需要调用的地方就好了，比如，简单的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class FeignController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    MsgClient msgClient;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/msg&quot;)</span><br><span class="line">    public String getMsg()&#123;</span><br><span class="line">        return msgClient.getMsg();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/param&quot;)</span><br><span class="line">    public String getMsgAndParam(String param)&#123;</span><br><span class="line">        return msgClient.getMsgAndParam(param);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>虽然我觉得吧，这样好像要写两遍接口…不是更麻烦吗= =，看到了有一个教程说，Feign的接口应该由服务提供方编写，然后服务消费者来引用就好了，想想好像也就复制粘贴的事，还是没法太理解啊~</p>
-<h3 id="附上前篇忘记加的东西"><a href="#附上前篇忘记加的东西" class="headerlink" title="附上前篇忘记加的东西"></a>附上前篇忘记加的东西</h3><p><a href="https://github.com/yuuki80code/cloud" target="_blank" rel="noopener">demo 地址</a></p>
+        <h3 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h3><p>其实本来是不想写的，今天想搞一下发现之前弄的全忘了- -好记性不如烂笔头啊！<br><a id="more"></a></p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><h4 id="安装kubectl"><a href="#安装kubectl" class="headerlink" title="安装kubectl"></a>安装kubectl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#下载最新&lt;br&gt;</span><br><span class="line">curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl</span><br><span class="line">#下载指定版本</span><br><span class="line">curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl</span><br></pre></td></tr></table></figure>
+<p>或者自己编译啥的爱咋样咋样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#移动到path下&lt;br&gt;</span><br><span class="line">sudo mv ./kubectl /usr/local/bin/kubectl</span><br></pre></td></tr></table></figure></p>
+<p>测试下是否正常<br><code>kubectl version</code></p>
+<h4 id="安装minikube"><a href="#安装minikube" class="headerlink" title="安装minikube"></a>安装minikube</h4><ol>
+<li>去minikube的github页，找到他的Release下载对应版本</li>
+<li>下载二进制包编译安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#下载&lt;br&gt;</span><br><span class="line">curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 &amp;&amp; chmod +x minikube&lt;br&gt;</span><br><span class="line">#安装&lt;br&gt;</span><br><span class="line">install minikube /usr/local/bin/</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>自行选择</p>
+<h4 id="安装k8s"><a href="#安装k8s" class="headerlink" title="安装k8s"></a>安装k8s</h4><p>先禁用下metrics-server<code>minikube addons disable metrics-server</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">minikube start \</span><br><span class="line">--vm-driver=none \</span><br><span class="line">--registry-mirror=https://registry.docker-cn.com \</span><br><span class="line">--image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers \</span><br><span class="line">--extra-config=kubelet.authentication-token-webhook=true</span><br></pre></td></tr></table></figure>
+<p>加<strong>extra-config</strong>是因为后面要装metrics-server</p>
+<p>安装完后执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -A</span><br></pre></td></tr></table></figure></p>
+<p>查看下pods状态，如果coredns的状态异常的话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">iptables --flush</span><br><span class="line">iptables -tnat --flush</span><br><span class="line">systemctl start kubelet</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure></p>
+<p>这段脚本执行下应该就没啥问题了</p>
+<h4 id="开启dashboard"><a href="#开启dashboard" class="headerlink" title="开启dashboard"></a>开启dashboard</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube dashboard --url</span><br></pre></td></tr></table></figure>
+<p>等待下，一般也是没啥问题，会显示dashboard的访问地址</p>
+<p>复制地址到浏览器，改下ip，可能会发现…诶！访问不到！</p>
+<p>好像是因为只监听本机的原因我也不是很懂，也有可能不是nodeport</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl proxy --port=8001 --address=&apos;192.168.113.55&apos; --accept-hosts=&apos;^.*&apos; &amp;</span><br></pre></td></tr></table></figure>
+<p>用proxy把他映射出来，address改成你的，不知道就<code>minikube ip</code>看下</p>
+<p>再访问就哦了</p>
+<h4 id="加上metrics-server"><a href="#加上metrics-server" class="headerlink" title="加上metrics-server"></a>加上metrics-server</h4><p><a href="https://github.com/kubernetes-sigs/metrics-server" target="_blank" rel="noopener">地址</a> 自己去下载</p>
+<p>里面也有教程，看不到的话就…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"># disable the metrics-server addon for minikube in case it was enabled, because it installs the metric-server@v0.2.1</span><br><span class="line">$ minikube addons disable metrics-server</span><br><span class="line"></span><br><span class="line"># now start a new minikube</span><br><span class="line">$ minikube delete; minikube start --extra-config=kubelet.authentication-token-webhook=true</span><br><span class="line">🔥  Deleting &quot;minikube&quot; from virtualbox ...</span><br><span class="line">💔  The &quot;minikube&quot; cluster has been deleted.</span><br><span class="line">😄  minikube v1.2.0 on linux (amd64)</span><br><span class="line">🔥  Creating virtualbox VM (CPUs=2, Memory=2048MB, Disk=20000MB) ...</span><br><span class="line">🐳  Configuring environment for Kubernetes v1.15.0 on Docker 18.09.6</span><br><span class="line">    ▪ kubelet.authentication-token-webhook=true</span><br><span class="line">🚜  Pulling images ...</span><br><span class="line">🚀  Launching Kubernetes ...</span><br><span class="line">⌛  Verifying: apiserver proxy etcd scheduler controller dns</span><br><span class="line">🏄  Done! kubectl is now configured to use &quot;minikube&quot;</span><br><span class="line"></span><br><span class="line"># deploy the latest metric-server</span><br><span class="line">$ kubectl create -f deploy/1.8+/</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created</span><br><span class="line">rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created</span><br><span class="line">apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created</span><br><span class="line">serviceaccount/metrics-server created</span><br><span class="line">deployment.extensions/metrics-server created</span><br><span class="line">service/metrics-server created</span><br><span class="line">clusterrole.rbac.authorization.k8s.io/system:metrics-server created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created</span><br><span class="line"></span><br><span class="line"># edit metric-server deployment to add the flags</span><br><span class="line"># args:</span><br><span class="line"># - --kubelet-insecure-tls</span><br><span class="line"># - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname</span><br><span class="line">$ kubectl edit deploy -n kube-system metrics-server</span><br></pre></td></tr></table></figure></p>
+<p>前面两部其实建k8s那都做了，其实只需要把那个服务起起来就好了</p>
+<p>然后就好了，可以看到pod的一些监控?</p>
+<p>end…</p>
 
       
     </div>
@@ -472,7 +486,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+            <a href="/tags/k8s/" rel="tag"><i class="fa fa-tag"></i> k8s</a>
           
         </div>
       
@@ -485,8 +499,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/21/SpringCloud-学习之-Ribbon负载均衡/" rel="next" title="SpringCloud-学习之-Ribbon负载均衡">
-                <i class="fa fa-chevron-left"></i> SpringCloud-学习之-Ribbon负载均衡
+              <a href="/2019/10/16/neo4j导入知识图谱初体验/" rel="next" title="neo4j导入知识图谱初体验">
+                <i class="fa fa-chevron-left"></i> neo4j导入知识图谱初体验
               </a>
             
           </div>
@@ -494,10 +508,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/12/SpringCloud-学习之-Hystrix/" rel="prev" title="SpringCloud 学习之 Hystrix">
-                SpringCloud 学习之 Hystrix <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -668,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#把Feign引入"><span class="nav-number">1.</span> <span class="nav-text">把Feign引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Feign"><span class="nav-number">2.</span> <span class="nav-text">使用Feign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附上前篇忘记加的东西"><span class="nav-number">3.</span> <span class="nav-text">附上前篇忘记加的东西</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前记"><span class="nav-number">1.</span> <span class="nav-text">前记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装kubectl"><span class="nav-number">2.1.</span> <span class="nav-text">安装kubectl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装minikube"><span class="nav-number">2.2.</span> <span class="nav-text">安装minikube</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装k8s"><span class="nav-number">2.3.</span> <span class="nav-text">安装k8s</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启dashboard"><span class="nav-number">2.4.</span> <span class="nav-text">开启dashboard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加上metrics-server"><span class="nav-number">2.5.</span> <span class="nav-text">加上metrics-server</span></a></li></ol></li></ol></div>
             
 
           </div>
