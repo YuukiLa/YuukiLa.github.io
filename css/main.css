@@ -1104,9 +1104,6 @@ pre .javascript .function {
 .back-to-top.back-to-top-on {
   bottom: 19px;
 }
-.header {
-  background: transparent;
-}
 .header-inner {
   position: relative;
 }
@@ -1217,7 +1214,7 @@ pre .javascript .function {
 .menu .menu-item a,
 .menu .menu-item span.exturl {
   display: block;
-  font-size: 13px;
+  font-size: 18px;
   line-height: inherit;
   border-bottom: 1px solid transparent;
   transition-property: border-color;
@@ -1850,7 +1847,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2a8218;
+  background: #25ff47;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2523,9 +2520,6 @@ hr {
 .main-inner {
   margin-top: 80px;
 }
-.header {
-  background: #f5f5f5;
-}
 .header-inner {
   padding: 25px 0 20px;
 }
@@ -2567,7 +2561,8 @@ hr {
   display: none;
 }
 .site-meta .site-title {
-  font-size: 22px;
+  font-size: 30px;
+  font-family: courier;
   font-weight: bolder;
 }
 @media (max-width: 767px) {
@@ -2613,11 +2608,6 @@ hr {
 .site-nav-toggle {
   position: static;
   float: right;
-}
-.menu-item-active a,
-.menu .menu-item a:hover,
-.menu .menu-item span.exturl:hover {
-  background: #e1e1e1;
 }
 .menu {
   margin: 8px 0 0 0;
@@ -2670,6 +2660,11 @@ hr {
   .menu .menu-item span.exturl {
     text-align: left;
   }
+}
+.menu .menu-item a:hover,
+.menu .menu-item span.exturl:hover {
+  border-bottom: 2px solid;
+  border-color: #40dab2;
 }
 @media (hover: none) {
   .menu .menu-item a:hover,
@@ -2847,4 +2842,20 @@ hr {
     width: auto;
     text-align: center;
   }
+}
+code {
+  color: #ff7600;
+  background: #fbf7f8;
+  margin: 2px;
+}
+.highlight,
+pre {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 3px;
+}
+.highlight,
+code,
+pre {
+  border: 1px solid #d6d6d6;
 }
