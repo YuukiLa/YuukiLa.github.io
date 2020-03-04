@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.5.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="???CAS(Central Authentication Service) 即中央认证服务，也就是所谓的单点登录吧，大企业有多个系统的话，可以通过cas做到在一个系统登录，访问其他系统的时候直接就登录。 下面我们就简单实现以下cas，不用apache的那个。">
+<meta name="keywords" content="cas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单cas实现">
+<meta property="og:url" content="https://yuuki80code.github.io/2020/03/04/简单cas实现/index.html">
+<meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:description" content="???CAS(Central Authentication Service) 即中央认证服务，也就是所谓的单点登录吧，大企业有多个系统的话，可以通过cas做到在一个系统登录，访问其他系统的时候直接就登录。 下面我们就简单实现以下cas，不用apache的那个。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-04T08:09:57.545Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单cas实现">
+<meta name="twitter:description" content="???CAS(Central Authentication Service) 即中央认证服务，也就是所谓的单点登录吧，大企业有多个系统的话，可以通过cas做到在一个系统登录，访问其他系统的时候直接就登录。 下面我们就简单实现以下cas，不用apache的那个。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yuuki80code.github.io/2020/03/04/简单cas实现/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>简单cas实现 | Yuuki Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <!-- <span class="logo-line-before"><i></i></span> -->
+        <span class="site-title">Yuuki Blog</span>
+        <!--<span class="logo-line-after"><i></i></span>-->
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+   
+    
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+   
+    
+
+    <a href="/about/" rel="section">关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+   
+    
+
+    <a href="/tags/" rel="section">标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+   
+    
+
+    <a href="/archives/" rel="section">归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2020/03/04/简单cas实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简单cas实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-04 15:51:16 / 修改时间：16:09:57" itemprop="dateCreated datePublished" datetime="2020-03-04T15:51:16+08:00">2020-03-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/04/简单cas实现/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/03/04/简单cas实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/03/04/简单cas实现/" class="leancloud_visitors" data-flag-title="简单cas实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id=""><a href="#" class="headerlink" title="???"></a>???</h3><p>CAS(Central Authentication Service) 即中央认证服务，也就是所谓的单点登录吧，大企业有多个系统的话，可以通过cas做到在一个系统登录，访问其他系统的时候直接就登录。</p>
+<p>下面我们就简单实现以下cas，不用apache的那个。<br><a id="more"></a></p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><ol>
+<li><p>修改hosts</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 mtv</span><br><span class="line">127.0.0.1 music</span><br><span class="line">127.0.0.1 sso</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备两个前端项目<br> 简单的介绍下，就是打开页面的时候从cookies判断是否存在用户信息，如果不存在就跳转到单点登录的登录界面，如果url携带临时票据（cas返回的），就去cas验证临时票据的有效性</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">				userIsLogin: false,</span><br><span class="line">				userInfo: &#123;&#125;,</span><br><span class="line">			&#125;,</span><br><span class="line">			created() &#123;</span><br><span class="line">				var me = this;</span><br><span class="line">				// 通过cookie判断用户是否登录</span><br><span class="line">				this.judgeUserLoginStatus();</span><br><span class="line"></span><br><span class="line">				// http://mtv:8080/sso-mtv/index.html</span><br><span class="line"></span><br><span class="line">				// 判断用户是否登录</span><br><span class="line">				var userIsLogin = this.userIsLogin;</span><br><span class="line">				if (!userIsLogin) &#123;</span><br><span class="line">					// 如果没有登录，判断一下是否存在tmpTicket临时票据</span><br><span class="line">					var tmpTicket = app.getUrlParam(&quot;tmpTicket&quot;);</span><br><span class="line">					console.log(&quot;tmpTicket: &quot; + tmpTicket);</span><br><span class="line">					if (tmpTicket != null &amp;&amp; tmpTicket != &quot;&quot; &amp;&amp; tmpTicket != undefined) &#123;</span><br><span class="line">						// 如果有tmpTicket临时票据，就携带临时票据发起请求到cas验证获取用户会话</span><br><span class="line">						var serverUrl = app.serverUrl;</span><br><span class="line">						axios.defaults.withCredentials = true;</span><br><span class="line">						axios.post(&apos;http://sso:8090/verifyTmpTicket?tmpTicket=&apos; + tmpTicket)</span><br><span class="line">							.then(res =&gt; &#123;</span><br><span class="line">								if (res.data.status == 200) &#123;</span><br><span class="line">									var userInfo = res.data.data;</span><br><span class="line">									console.log(res.data.data);</span><br><span class="line">									this.userInfo = userInfo;</span><br><span class="line">									this.userIsLogin = true;</span><br><span class="line">									app.setCookie(&quot;user&quot;,  userInfo);</span><br><span class="line">									window.location.href = &quot;http://mtv:8888/sso-mtv/index.html&quot;;</span><br><span class="line">								&#125; else &#123;</span><br><span class="line">									alert(res.data.msg);</span><br><span class="line">									console.log(res.data.msg);</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;);</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						// 如果没有tmpTicket临时票据，说明用户从没登录过，那么就可以跳转至cas做统一登录认证了</span><br><span class="line">						window.location.href = app.SSOServerUrl + &quot;/login?returnUrl=http://mtv:8888/sso-mtv/index.html&quot;;</span><br><span class="line">					&#125;</span><br><span class="line"></span><br><span class="line">					console.log(app.SSOServerUrl + &quot;/login?returnUrl=&quot; + window.location);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;,</span><br><span class="line">			methods: &#123;</span><br><span class="line">				// 通过cookie判断用户是否登录</span><br><span class="line">				judgeUserLoginStatus() &#123;</span><br><span class="line">					var userCookie = app.getCookie(&quot;user&quot;);</span><br><span class="line">					if (</span><br><span class="line">						userCookie != null &amp;&amp;</span><br><span class="line">						userCookie != undefined &amp;&amp;</span><br><span class="line">						userCookie != &quot;&quot;</span><br><span class="line">					) &#123;</span><br><span class="line">						var userInfoStr = decodeURIComponent(userCookie);</span><br><span class="line">						// console.log(userInfo);</span><br><span class="line">						if (</span><br><span class="line">							userInfoStr != null &amp;&amp;</span><br><span class="line">							userInfoStr != undefined &amp;&amp;</span><br><span class="line">							userInfoStr != &quot;&quot;</span><br><span class="line">						) &#123;</span><br><span class="line">							var userInfo = JSON.parse(userInfoStr);</span><br><span class="line">                            // 判断是否是一个对象</span><br><span class="line">                            if ( typeof(userInfo)  == &quot;object&quot; ) &#123;</span><br><span class="line">                                this.userIsLogin = true;</span><br><span class="line">                                // console.log(userInfo);</span><br><span class="line">                                this.userInfo = userInfo;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                this.userIsLogin = false;</span><br><span class="line">                                this.userInfo = &#123;&#125;;</span><br><span class="line">                            &#125;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						this.userIsLogin = false;</span><br><span class="line">						this.userInfo = &#123;&#125;;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br></pre></td></tr></table></figure>
+<p> 这个是mtv，的music那个就改成music就好了！</p>
+</li>
+<li>准备一个springboot工程，依赖redis，thymeleaf</li>
+</ol>
+<h3 id="cas实现"><a href="#cas实现" class="headerlink" title="cas实现"></a>cas实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CasLoginController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    StringRedisTemplate redisTemplate;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String REDIS_TICKET = <span class="string">"redis_ticket"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String REDIS_USER = <span class="string">"redis_user"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String REDIS_TEMP_TICKET = <span class="string">"redis_temp_ticket"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String COOKIE_TICKET = <span class="string">"cookie_ticket"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"login"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">(String returnUrl, HttpServletRequest request, HttpServletResponse response, Model model)</span></span>&#123;</span><br><span class="line">        model.addAttribute(<span class="string">"returnUrl"</span>,returnUrl);</span><br><span class="line">        <span class="comment">// 获取全局ticket</span></span><br><span class="line">        String globalTicket = getCookie(request, COOKIE_TICKET).getValue();</span><br><span class="line">        <span class="keyword">if</span>(globalTicket!=<span class="keyword">null</span> &amp;&amp; !globalTicket.equals(<span class="string">""</span>))&#123;</span><br><span class="line">            String userId = redisTemplate.opsForValue().get(REDIS_TICKET + <span class="string">":"</span> + globalTicket);</span><br><span class="line">            <span class="comment">// 4.判断用户是否存在</span></span><br><span class="line">            <span class="keyword">if</span>(userId!=<span class="keyword">null</span> &amp;&amp; !userId.equals(<span class="string">""</span>))&#123;</span><br><span class="line">                String userInfo = redisTemplate.opsForValue().get(REDIS_USER + <span class="string">":"</span> + userId);</span><br><span class="line">                <span class="comment">//判断用户会话是否存在</span></span><br><span class="line">                <span class="keyword">if</span>(userInfo!=<span class="keyword">null</span> &amp;&amp; !userInfo.equals(<span class="string">""</span>))&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="string">"redirect:"</span>+returnUrl+<span class="string">"?tmpTicket="</span>+createTicket();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"doLogin"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">doLogin</span><span class="params">(String username,String password,String returnUrl,HttpServletRequest request, HttpServletResponse response, Model model)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1.模拟登陆</span></span><br><span class="line">        <span class="keyword">if</span>(username.equals(<span class="string">"yuuki"</span>) &amp;&amp; password.equals(<span class="string">"123456"</span>)) &#123;</span><br><span class="line">            <span class="comment">// 1.1. 创建用户会话</span></span><br><span class="line">            redisTemplate.opsForValue().set(REDIS_USER+<span class="string">":"</span>+<span class="string">"1"</span>,<span class="string">"&#123;\"username\":\"yuuki\"&#125;"</span>);</span><br><span class="line">            <span class="comment">// 2. 生成全局ticket 并放入cookie</span></span><br><span class="line">            String globalTicket = UUID.randomUUID().toString();</span><br><span class="line">            setCookie(COOKIE_TICKET,globalTicket,response);</span><br><span class="line">            <span class="comment">// 3. 把用户放到redis</span></span><br><span class="line">            redisTemplate.opsForValue().set(REDIS_TICKET+<span class="string">":"</span>+globalTicket,<span class="string">"1"</span>);</span><br><span class="line">            <span class="comment">// 4. 创建临时ticket</span></span><br><span class="line">            String ticket = createTicket();</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"redirect:"</span>+returnUrl+<span class="string">"?tmpTicket="</span>+ticket;</span><br><span class="line">        &#125;</span><br><span class="line">        model.addAttribute(<span class="string">"returnUrl"</span>,returnUrl);</span><br><span class="line">        model.addAttribute(<span class="string">"errMsg"</span>,<span class="string">"用户名或密码错误"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"verifyTmpTicket"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">verifyTmpTicket</span><span class="params">(String tmpTicket,HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">// 1. 获取临时ticket</span></span><br><span class="line">        String tempTicket = redisTemplate.opsForValue().get(REDIS_TEMP_TICKET + <span class="string">":"</span> + tmpTicket);</span><br><span class="line">        <span class="comment">// 2. 判断是否存在临时ticket</span></span><br><span class="line">        <span class="keyword">if</span>(tempTicket!=<span class="keyword">null</span> &amp;&amp; !tempTicket.equals(<span class="string">""</span>)) &#123;</span><br><span class="line">            <span class="comment">// 3. 移除临时ticket</span></span><br><span class="line">            redisTemplate.delete(REDIS_TEMP_TICKET + <span class="string">":"</span> + tmpTicket);</span><br><span class="line">            String globalTicket = getCookie(request, COOKIE_TICKET).getValue();</span><br><span class="line">            String userId = redisTemplate.opsForValue().get(REDIS_TICKET + <span class="string">":"</span> + globalTicket);</span><br><span class="line">            <span class="comment">// 4.判断用户是否存在</span></span><br><span class="line">            <span class="keyword">if</span>(userId!=<span class="keyword">null</span> &amp;&amp; !userId.equals(<span class="string">""</span>))&#123;</span><br><span class="line">                String userInfo = redisTemplate.opsForValue().get(REDIS_USER + <span class="string">":"</span> + userId);</span><br><span class="line">                <span class="comment">//判断用户会话是否存在</span></span><br><span class="line">                <span class="keyword">if</span>(userInfo!=<span class="keyword">null</span> &amp;&amp; !userInfo.equals(<span class="string">""</span>))&#123;</span><br><span class="line">                    result.put(<span class="string">"status"</span>,<span class="number">200</span>);</span><br><span class="line">                    result.put(<span class="string">"msg"</span>,<span class="string">"success"</span>);</span><br><span class="line">                    result.put(<span class="string">"data"</span>,userInfo);</span><br><span class="line">                    <span class="keyword">return</span> result;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        result.put(<span class="string">"status"</span>,<span class="number">500</span>);</span><br><span class="line">        result.put(<span class="string">"msg"</span>,<span class="string">"票据错误"</span>);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">createTicket</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String tempTicket = UUID.randomUUID().toString();</span><br><span class="line">        redisTemplate.opsForValue().set(REDIS_TEMP_TICKET+<span class="string">":"</span>+tempTicket,tempTicket,<span class="number">600</span>, TimeUnit.SECONDS);</span><br><span class="line">        <span class="keyword">return</span> tempTicket;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setCookie</span><span class="params">(String key,String value,HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">        Cookie cookie = <span class="keyword">new</span> Cookie(key, value);</span><br><span class="line">        cookie.setDomain(<span class="string">"sso"</span>);</span><br><span class="line">        cookie.setPath(<span class="string">"/"</span>);</span><br><span class="line">        response.addCookie(cookie);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>cas 登录<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>cas 登录<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">th:action</span>=<span class="string">"@&#123;doLogin&#125;"</span> <span class="attr">method</span>=<span class="string">"post"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>用户名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"username"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>密码<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"color:red;"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;errMsg&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"returnUrl"</span> <span class="attr">th:value</span>=<span class="string">"$&#123;returnUrl&#125;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"登录"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>直接贴代码自己看了- -</p>
+<p>简单介绍下就是:</p>
+<ol>
+<li>当前端cookies没有用户信息时就会重定向到cas的login接口</li>
+<li>login接口里会先去sso的cookies查找是否存在全局票据,如果存在接着校验全局票据有效性，并且返回一个临时票据给前端。否则跳转到cas的登录页</li>
+<li>用户在cas登录后，校验完成后会生成全局票据存放在sso的cookies里面，并且将用户信息保存到redis，然后生成临时票据返回给前端。</li>
+<li>前端接收到临时票据后，会将临时票据传递给cas校验，校验成功后会将用户信息返回，前端将用户信息保存到cookies中。</li>
+</ol>
+<p>这就是简单的cas实现了，下次试试Apache的。</p>
+<p>end</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cas/" rel="tag"><i class="fa fa-tag"></i> cas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/25/redis集群初体验/" rel="next" title="redis集群初体验">
+                <i class="fa fa-chevron-left"></i> redis集群初体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+ <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/yise.png"
+                alt="yuuki" />
+            
+              <p class="site-author-name" itemprop="name">yuuki</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mrbird.cc" title="https://mrbird.cc" rel="noopener" target="_blank">MrBird</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://liuzhuoming.xyz/" title="http://liuzhuoming.xyz/" rel="noopener" target="_blank">CV胸</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sonake.com/" title="https://www.sonake.com/" rel="noopener" target="_blank">云大佬</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">???</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cas实现"><span class="nav-number">3.</span> <span class="nav-text">cas实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuuki</span>
+
+  
+
+  
+</div>
+<!--
+
+
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: '9cnLmPwwzy2Blh70qyLkwVsd-gzGzoHsz',
+        appKey: '8De3bIBDaRtb9uIFAKrKN2YN',
+        placeholder: 'ヾﾉ≧∀≦)o 来呀！快活呀！~',
+        avatar:'monsterid',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va",
+                'X-LC-Key': "ksAmt3UmG6DBkExqMmOVSwe7",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/mo.min.js"></script>
+<script>
+$(function(){$("a").not(".nav-link,.cloud-tie-join-count,.ignore-href,.jstree-anchor").addClass("animsition-link")});var burst1=new mojs.Burst({left:0,top:0,radius:{5:40},children:{shape:"circle",fill:["red","cyan","orange"],fillOpacity:.8,radiusX:3.5,radiusY:3.5}});document.addEventListener("click",function(a){null==a.target.href&&"footer"!=a.target.className&&"copyright"!=a.target.className&&"author__urls social-icons"!=a.target.className&&"author__avatar"!=a.target.className&&"sidebar sidebar-active"!=a.target.className&&burst1.tune({x:a.pageX,y:a.pageY}).generate().replay()})
+</script>
+</body>
+</html>
