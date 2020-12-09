@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.5.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="???咱也不知道学这玩意干嘛- -要不是因为招聘上面写了要会这个我真不想学！！！🙄">
+<meta name="keywords" content="mysql,mycat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql主从和mycat初体验">
+<meta property="og:url" content="https://yuuki80code.github.io/2020/03/10/mysql主从和mycat初体验/index.html">
+<meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:description" content="???咱也不知道学这玩意干嘛- -要不是因为招聘上面写了要会这个我真不想学！！！🙄">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuuki80code.github.io/2020/03/10/mysql主从和mycat初体验/1.png">
+<meta property="og:updated_time" content="2020-03-10T07:41:26.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql主从和mycat初体验">
+<meta name="twitter:description" content="???咱也不知道学这玩意干嘛- -要不是因为招聘上面写了要会这个我真不想学！！！🙄">
+<meta name="twitter:image" content="https://yuuki80code.github.io/2020/03/10/mysql主从和mycat初体验/1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yuuki80code.github.io/2020/03/10/mysql主从和mycat初体验/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>mysql主从和mycat初体验 | Yuuki Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <!-- <span class="logo-line-before"><i></i></span> -->
+        <span class="site-title">Yuuki Blog</span>
+        <!--<span class="logo-line-after"><i></i></span>-->
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+   
+    
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+   
+    
+
+    <a href="/about/" rel="section">关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+   
+    
+
+    <a href="/tags/" rel="section">标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+   
+    
+
+    <a href="/archives/" rel="section">归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2020/03/10/mysql主从和mycat初体验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql主从和mycat初体验
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-10 14:54:48 / 修改时间：15:41:26" itemprop="dateCreated datePublished" datetime="2020-03-10T14:54:48+08:00">2020-03-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/10/mysql主从和mycat初体验/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/03/10/mysql主从和mycat初体验/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/03/10/mysql主从和mycat初体验/" class="leancloud_visitors" data-flag-title="mysql主从和mycat初体验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id=""><a href="#" class="headerlink" title="???"></a>???</h3><p>咱也不知道学这玩意干嘛- -要不是因为招聘上面写了要会这个我真不想学！！！🙄</p>
+<a id="more"></a>
+<h3 id="mysql主从配置"><a href="#mysql主从配置" class="headerlink" title="mysql主从配置"></a>mysql主从配置</h3><p>首先准备一台虚拟机，里面装上docker。或者你准备两台上面直接装mysql也行，我这图个方便用docker。</p>
+<p>接着准备下mysql的配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">user=mysql</span><br><span class="line">character-set-server=utf8</span><br><span class="line">default_authentication_plugin=mysql_native_password</span><br><span class="line"># 主要的配置就下面俩</span><br><span class="line"># 二进制log（master必须，slave非必须</span><br><span class="line">log-bin=yuuki_log</span><br><span class="line"># 主从的id要不一致</span><br><span class="line">server-id=1</span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure></p>
+<p>然后启动俩mysql实例,这边只放一个命令，注意自己改下端口，映射文件目录，容器名<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">--name mysql \</span><br><span class="line">-p3306:3306 \</span><br><span class="line">-v /root/mysql/my1.cnf:/etc/mysql/my.cnf \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=root \</span><br><span class="line">-d mysql:5.7.29</span><br></pre></td></tr></table></figure></p>
+<p>启动完成后用工具连上，我们先进入master做一些配置</p>
+<ol>
+<li><p>新建一个用户用户主从连接时</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">USER</span> <span class="string">'repl'</span>@<span class="string">'%'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">by</span> <span class="string">'yuuki@123456'</span>;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">replication</span> <span class="keyword">slave</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'repl'</span>@<span class="string">'%'</span>;</span><br><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>锁表，并把master的数据库、表和数据同步到slave(我这边直接用Navicat同步了，也可以用别的比如mysqldump)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">TABLES</span> <span class="keyword">WITH</span> <span class="keyword">READ</span> <span class="keyword">LOCK</span>;</span><br><span class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同步完成后解锁，然后查看下master节点状态</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">MASTER</span> <span class="keyword">status</span>;</span><br></pre></td></tr></table></figure>
+<p> 可以看到下图，注意file和pos，待会会用到<br> <img src="/2020/03/10/mysql主从和mycat初体验/1.png" alt="1"></p>
+</li>
+<li>配置从节点<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">change</span> <span class="keyword">MASTER</span> <span class="keyword">to</span></span><br><span class="line">master_host=<span class="string">'192.168.56.101'</span>,</span><br><span class="line">master_user=<span class="string">'repl'</span>,</span><br><span class="line">master_password=<span class="string">'yuuki@123456'</span>,</span><br><span class="line">master_log_file=<span class="string">'yuuki_log.000003'</span>,</span><br><span class="line">master_port=<span class="number">33060</span>,</span><br><span class="line">master_log_pos=<span class="number">1496</span>;</span><br><span class="line"><span class="keyword">START</span> <span class="keyword">SLAVE</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>发现没，我们指定得log-file和log—pos都是上面查出来的东东，之前新建的用户现在也派上用场了。没问题的话现在在master的表里插一条数据刷新从节点就能看到主节点插的那条数据了！</p>
+<h3 id="mycat"><a href="#mycat" class="headerlink" title="mycat"></a>mycat</h3><p>mycat就先简单的使用下，官方那个pdf很不错的。</p>
+<ol>
+<li><p>准备虚拟机</p>
+<p> |ip|备注|<br> |—|—|<br> 192.169.56.101|mysql<br> 192.169.56.101|mysql<br> 192.169.56.101|mycat</p>
+<p> 就用这三台先玩玩</p>
+</li>
+<li>下载安装mycat（mycat.io)</li>
+<li><p>修改配置文件（在conf目录下）</p>
+<p> server.xml(这边主要就是配置下用户名，schemas会对应下面schema.xml里的配置)</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">user</span> <span class="attr">name</span>=<span class="string">"root"</span> <span class="attr">defaultAccount</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"schemas"</span>&gt;</span>user<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultSchema"</span>&gt;</span>user<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--No MyCAT Database selected 错误前会尝试使用该schema作为schema，不设置则为null,报错 --&gt;</span>     </span><br><span class="line"> <span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span> <span class="attr">name</span>=<span class="string">"user"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span>&gt;</span>user<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"schemas"</span>&gt;</span>user<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"readOnly"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultSchema"</span>&gt;</span>user<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> server.xml（配置数据库连接，表，分库分表规则等）</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- schema配置表，rule指向rule.xml就是分表规则这边选用的这个是根据id大小分，还有别的日后再说 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">schema</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">checkSQLschema</span>=<span class="string">"true"</span> <span class="attr">sqlMaxLimit</span>=<span class="string">"100"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">table</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">primaryKey</span>=<span class="string">"id"</span> <span class="attr">dataNode</span>=<span class="string">"dn1,dn2"</span> <span class="attr">rule</span>=<span class="string">"auto-sharding-long"</span>&gt;</span></span><br><span class="line">					<span class="comment">&lt;!--&lt;childTable name="customer_addr" primaryKey="id" joinKey="customer_id" parentKey="id"&gt; &lt;/childTable&gt;--&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">schema</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- dataNode配置数据库，dataHost属性只想dataHost节点 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dataNode</span> <span class="attr">name</span>=<span class="string">"dn1"</span> <span class="attr">dataHost</span>=<span class="string">"101"</span> <span class="attr">database</span>=<span class="string">"user"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dataNode</span> <span class="attr">name</span>=<span class="string">"dn2"</span> <span class="attr">dataHost</span>=<span class="string">"102"</span> <span class="attr">database</span>=<span class="string">"user"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- dataHost配置mysql连接，里面还能配置读节点什么的具体看官方指导 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dataHost</span> <span class="attr">name</span>=<span class="string">"101"</span> <span class="attr">maxCon</span>=<span class="string">"1000"</span> <span class="attr">minCon</span>=<span class="string">"10"</span> <span class="attr">balance</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">									<span class="attr">writeType</span>=<span class="string">"0"</span> <span class="attr">dbType</span>=<span class="string">"mysql"</span> <span class="attr">dbDriver</span>=<span class="string">"jdbc"</span> <span class="attr">switchType</span>=<span class="string">"1"</span>  <span class="attr">slaveThreshold</span>=<span class="string">"100"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">heartbeat</span>&gt;</span>select user()<span class="tag">&lt;/<span class="name">heartbeat</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- can have multi write hosts --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">writeHost</span> <span class="attr">host</span>=<span class="string">"192.168.56.101"</span> <span class="attr">url</span>=<span class="string">"jdbc:mysql://192.168.56.101:3306"</span> <span class="attr">user</span>=<span class="string">"root"</span></span></span><br><span class="line"><span class="tag">										 <span class="attr">password</span>=<span class="string">"root"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">writeHost</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- &lt;writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataHost</span>&gt;</span></span><br><span class="line">				</span><br><span class="line"><span class="tag">&lt;<span class="name">dataHost</span> <span class="attr">name</span>=<span class="string">"102"</span> <span class="attr">maxCon</span>=<span class="string">"1000"</span> <span class="attr">minCon</span>=<span class="string">"10"</span> <span class="attr">balance</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">									<span class="attr">writeType</span>=<span class="string">"0"</span> <span class="attr">dbType</span>=<span class="string">"mysql"</span> <span class="attr">dbDriver</span>=<span class="string">"jdbc"</span> <span class="attr">switchType</span>=<span class="string">"1"</span>  <span class="attr">slaveThreshold</span>=<span class="string">"100"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">heartbeat</span>&gt;</span>select user()<span class="tag">&lt;/<span class="name">heartbeat</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- can have multi write hosts --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">writeHost</span> <span class="attr">host</span>=<span class="string">"192.168.56.102"</span> <span class="attr">url</span>=<span class="string">"jdbc:mysql://192.168.56.102:3306"</span> <span class="attr">user</span>=<span class="string">"root"</span></span></span><br><span class="line"><span class="tag">										 <span class="attr">password</span>=<span class="string">"root"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">writeHost</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- &lt;writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataHost</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> rule.xml(这边都是一些分库分表的规则)</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这段就是我们在schema配置的规则，algorithm指向下面的function节点 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tableRule</span> <span class="attr">name</span>=<span class="string">"auto-sharding-long"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">rule</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">columns</span>&gt;</span>id<span class="tag">&lt;/<span class="name">columns</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">algorithm</span>&gt;</span>rang-long<span class="tag">&lt;/<span class="name">algorithm</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">rule</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tableRule</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 可以看到这边配置映射到了一个txt文件 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">function</span> <span class="attr">name</span>=<span class="string">"rang-long"</span></span></span><br><span class="line"><span class="tag">									<span class="attr">class</span>=<span class="string">"io.mycat.route.function.AutoPartitionByLong"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mapFile"</span>&gt;</span>autopartition-long.txt<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">function</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> autopartition-long.txt（rule.xml映射的文件）</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># range start-end ,data node index</span><br><span class="line"># K=1000,M=10000.</span><br><span class="line">0-500M=0</span><br><span class="line">500M-1000M=1</span><br><span class="line">#1000M-1500M=2</span><br></pre></td></tr></table></figure>
+<p> 配置的就是主键0-500万会存到第一个库，500万到1000万会存到第二个库，第三个我们先注释掉因为我们只有俩</p>
+</li>
+<li><p>启动mycat(在bin目录下,先用console启动这样可以看到启动日志)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mycat console</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用工具连接（端口8066）</p>
+</li>
+</ol>
+<p>这样就好了，在mycat插入一条id落在0-500万的数据，去101数据库查看，再插入一条id落在500万-1000万的数据去102查看，没毛病的话就算完了。</p>
+<p>end…</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+            <a href="/tags/mycat/" rel="tag"><i class="fa fa-tag"></i> mycat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/09/分布式锁初体验/" rel="next" title="分布式锁初体验">
+                <i class="fa fa-chevron-left"></i> 分布式锁初体验
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+ <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/yise.png"
+                alt="yuuki" />
+            
+              <p class="site-author-name" itemprop="name">yuuki</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mrbird.cc" title="https://mrbird.cc" rel="noopener" target="_blank">MrBird</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://liuzhuoming.xyz/" title="http://liuzhuoming.xyz/" rel="noopener" target="_blank">CV胸</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sonake.com/" title="https://www.sonake.com/" rel="noopener" target="_blank">云大佬</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text">???</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql主从配置"><span class="nav-number">2.</span> <span class="nav-text">mysql主从配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mycat"><span class="nav-number">3.</span> <span class="nav-text">mycat</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuuki</span>
+
+  
+
+  
+</div>
+<!--
+
+
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: '9cnLmPwwzy2Blh70qyLkwVsd-gzGzoHsz',
+        appKey: '8De3bIBDaRtb9uIFAKrKN2YN',
+        placeholder: 'ヾﾉ≧∀≦)o 来呀！快活呀！~',
+        avatar:'monsterid',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va",
+                'X-LC-Key': "ksAmt3UmG6DBkExqMmOVSwe7",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/mo.min.js"></script>
+<script>
+$(function(){$("a").not(".nav-link,.cloud-tie-join-count,.ignore-href,.jstree-anchor").addClass("animsition-link")});var burst1=new mojs.Burst({left:0,top:0,radius:{5:40},children:{shape:"circle",fill:["red","cyan","orange"],fillOpacity:.8,radiusX:3.5,radiusY:3.5}});document.addEventListener("click",function(a){null==a.target.href&&"footer"!=a.target.className&&"copyright"!=a.target.className&&"author__urls social-icons"!=a.target.className&&"author__avatar"!=a.target.className&&"sidebar sidebar-active"!=a.target.className&&burst1.tune({x:a.pageX,y:a.pageY}).generate().replay()})
+</script>
+</body>
+</html>

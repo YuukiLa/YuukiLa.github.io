@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.5.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud 学习之 Hystrix">
+<meta property="og:url" content="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/index.html">
+<meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-12T13:43:55.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud 学习之 Hystrix">
+<meta name="twitter:description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SpringCloud 学习之 Hystrix | Yuuki Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <!-- <span class="logo-line-before"><i></i></span> -->
+        <span class="site-title">Yuuki Blog</span>
+        <!--<span class="logo-line-after"><i></i></span>-->
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+   
+    
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+   
+    
+
+    <a href="/about/" rel="section">关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+   
+    
+
+    <a href="/tags/" rel="section">标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+   
+    
+
+    <a href="/archives/" rel="section">归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringCloud 学习之 Hystrix
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-12 20:23:06 / 修改时间：21:43:55" itemprop="dateCreated datePublished" datetime="2018-12-12T20:23:06+08:00">2018-12-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/12/SpringCloud-学习之-Hystrix/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/12/SpringCloud-学习之-Hystrix/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/12/SpringCloud-学习之-Hystrix/" class="leancloud_visitors" data-flag-title="SpringCloud 学习之 Hystrix">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Hystrix是啥"><a href="#Hystrix是啥" class="headerlink" title="Hystrix是啥"></a>Hystrix是啥</h3><p>hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。<br>hystrix就是用来防止这种情况发生的。<br><a id="more"></a></p>
+<h3 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h3><p>先把依赖引进来<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>哦对了，我们应该在调用方来防止服务雪崩，在提供方防止的话万一挂了还不是一样= =所以在服务消费者上使用hystrix</p>
+<p>引入依赖后再入口类上加上注解<code>@EnableHystrix</code> 然后发现我擦怎么一个入口类这么多注解- -<br>不慌，spring提供了一个叫<code>@SpringCloudApplication</code>的注解，点进去就会发现他包含了<code>@SpringBootApplication</code>,<code>@EnableDiscoveryClient</code>,<code>@EnableCircuitBreaker</code>三个注解</p>
+<p>接下来改造一下controller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;/msg&quot;)</span><br><span class="line">@HystrixCommand(fallbackMethod = &quot;getMsgFallBack&quot;)</span><br><span class="line">public String getMsg()&#123;</span><br><span class="line">    return msgClient.getMsg();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public String getMsgFallBack()&#123;</span><br><span class="line">    return &quot;触发服务降级...&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在getMsg方法上加上了<code>@HystrixCommand(fallbackMethod = &quot;getMsgFallBack&quot;)</code>神马意思呢？就是当服务提供方挂掉了，超时了，就会去调用<em>getMsgFallBack</em>方法，返回错误提示<br>好像在方法上加也是挺麻烦的哦~没关系，可以用<code>@DefaultProperties(defaultFallback = &quot;getMsgFallBack&quot;)</code>.加在类上，就不需要每个都配置啦！</p>
+<h3 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h3><p>刚刚说到服务提供者如果超时或者挂了，就会触发服务降级，那么默认超时是多少啊，看了下源码…1s！😱 我去，这个可不太行！<br>应该需要修改一下！<br>修改下刚刚的注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@DefaultProperties(defaultFallback = &quot;getMsgFallBack&quot;,commandProperties = &#123;@HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;,value = &quot;3000&quot;)&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>加上了commandProperties这个属性，然后value就是你想要的超时时间。<br>这个属性在<code>@HystrixCommand</code>上也有，是一样的。<br>在服务提供者的返回方法里让他睡上2秒钟，发现…他还是触发了降级！哈哈哈惊喜~因为我们已经集成了Feign了，而Feign是基于Ribbon的封装，本身有一套重试机制，原则上Ribbon的超时重试要大于Hystrix，不然就没意义了！<br>在yml里面加点配置就好了<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ribbon:</span></span><br><span class="line"><span class="attr">  ReadTimeout:</span> <span class="number">5000</span></span><br><span class="line"><span class="attr">  ConnectTimeout:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure></p>
+<p>然后再记录下全局的Hystrix超时配置，虽然百度一大堆= =<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hystrix:</span></span><br><span class="line"><span class="attr">  command:</span></span><br><span class="line"><span class="attr">    default:</span></span><br><span class="line"><span class="attr">      execution:</span></span><br><span class="line"><span class="attr">        isolation:</span></span><br><span class="line"><span class="attr">          thread:</span></span><br><span class="line"><span class="attr">            timeoutInMilliseconds:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
+<p>一寸长一寸强！</p>
+<h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h3><p>Hystrix有一套熔断机制，就比如一个服务你请求了20次，10几次都是超时的，就会触发熔断，这个服务就相当于被挂起，过了一定时间他就会尝试让请求通过，如果没问题了服务就会恢复正常。</p>
+<p>就了解到这吧够用了应该- -不懂再看文档了，<a href="https://mrbird.cc/Spring-Cloud-Hystrix-Circuit-Breaker.html" target="_blank" rel="noopener">点这</a>看帅逼群主的博客！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/SpringCloud-学习之-Feign/" rel="next" title="SpringCloud 学习之 Feign">
+                <i class="fa fa-chevron-left"></i> SpringCloud 学习之 Feign
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/17/SpringCloud-学习之-Zuul/" rel="prev" title="SpringCloud 学习之 Zuul">
+                SpringCloud 学习之 Zuul <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+ <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/yise.png"
+                alt="yuuki" />
+            
+              <p class="site-author-name" itemprop="name">yuuki</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mrbird.cc" title="https://mrbird.cc" rel="noopener" target="_blank">MrBird</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://liuzhuoming.xyz/" title="http://liuzhuoming.xyz/" rel="noopener" target="_blank">CV胸</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sonake.com/" title="https://www.sonake.com/" rel="noopener" target="_blank">云大佬</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hystrix是啥"><span class="nav-number">1.</span> <span class="nav-text">Hystrix是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单使用"><span class="nav-number">2.</span> <span class="nav-text">简单使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时"><span class="nav-number">3.</span> <span class="nav-text">超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熔断"><span class="nav-number">4.</span> <span class="nav-text">熔断</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuuki</span>
+
+  
+
+  
+</div>
+<!--
+
+
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: '9cnLmPwwzy2Blh70qyLkwVsd-gzGzoHsz',
+        appKey: '8De3bIBDaRtb9uIFAKrKN2YN',
+        placeholder: 'ヾﾉ≧∀≦)o 来呀！快活呀！~',
+        avatar:'monsterid',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va",
+                'X-LC-Key': "ksAmt3UmG6DBkExqMmOVSwe7",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/mo.min.js"></script>
+<script>
+$(function(){$("a").not(".nav-link,.cloud-tie-join-count,.ignore-href,.jstree-anchor").addClass("animsition-link")});var burst1=new mojs.Burst({left:0,top:0,radius:{5:40},children:{shape:"circle",fill:["red","cyan","orange"],fillOpacity:.8,radiusX:3.5,radiusY:3.5}});document.addEventListener("click",function(a){null==a.target.href&&"footer"!=a.target.className&&"copyright"!=a.target.className&&"author__urls social-icons"!=a.target.className&&"author__avatar"!=a.target.className&&"sidebar sidebar-active"!=a.target.className&&burst1.tune({x:a.pageX,y:a.pageY}).generate().replay()})
+</script>
+</body>
+</html>
