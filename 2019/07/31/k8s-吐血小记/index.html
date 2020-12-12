@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.5.0',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="经过两天无数次重装虚拟机，终于也是装好了k8s集群…k8s用来干嘛？不知道= =">
+<meta name="keywords" content="docker,k8s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s 吐血小记">
+<meta property="og:url" content="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/index.html">
+<meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:description" content="经过两天无数次重装虚拟机，终于也是装好了k8s集群…k8s用来干嘛？不知道= =">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/login.png">
+<meta property="og:image" content="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/dashboard.png">
+<meta property="og:updated_time" content="2019-07-31T03:51:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="k8s 吐血小记">
+<meta name="twitter:description" content="经过两天无数次重装虚拟机，终于也是装好了k8s集群…k8s用来干嘛？不知道= =">
+<meta name="twitter:image" content="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/login.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>k8s 吐血小记 | Yuuki Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <!-- <span class="logo-line-before"><i></i></span> -->
+        <span class="site-title">Yuuki Blog</span>
+        <!--<span class="logo-line-after"><i></i></span>-->
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+   
+    
+
+    <a href="/" rel="section">首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+   
+    
+
+    <a href="/about/" rel="section">关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+   
+    
+
+    <a href="/tags/" rel="section">标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+   
+    
+
+    <a href="/archives/" rel="section">归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/07/31/k8s-吐血小记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">k8s 吐血小记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-31 10:33:21 / 修改时间：11:51:18" itemprop="dateCreated datePublished" datetime="2019-07-31T10:33:21+08:00">2019-07-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/31/k8s-吐血小记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/31/k8s-吐血小记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/31/k8s-吐血小记/" class="leancloud_visitors" data-flag-title="k8s 吐血小记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>经过两天无数次重装虚拟机，终于也是装好了k8s集群…k8s用来干嘛？不知道= =<br><a id="more"></a></p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>准备几台linux虚拟机，什么系统无所谓反正我用的是centos7.6<br><br>下面是我准备的：<br></p>
+<table>
+<thead>
+<tr>
+<th>ip</th>
+<th>节点</th>
+<th>cpu</th>
+<th>内存</th>
+<th>hostname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.1.71</td>
+<td>master</td>
+<td>2c</td>
+<td>2g</td>
+<td>master</td>
+</tr>
+<tr>
+<td>192.168.1.68</td>
+<td>node1</td>
+<td>2c</td>
+<td>2g</td>
+<td>node1</td>
+</tr>
+</tbody>
+</table>
+<p>为啥只有两台？电脑扛不住啊！</p>
+<h3 id="系统配置-在每台机子都这么做"><a href="#系统配置-在每台机子都这么做" class="headerlink" title="系统配置(在每台机子都这么做)"></a>系统配置(在每台机子都这么做)</h3><ul>
+<li><p>设置hostname</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname $&#123;hostname&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加域名解析<br>编辑 /etc/hosts</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.71 master</span><br><span class="line">192.168.1.68 node1</span><br></pre></td></tr></table></figure>
+<p>可以直接用scp把文件传过去</p>
+</li>
+<li><p>关闭防火墙、selinux和swap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line">setenforce 0</span><br><span class="line"></span><br><span class="line">sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config</span><br><span class="line"></span><br><span class="line">swapoff -a</span><br><span class="line"></span><br><span class="line">sed -i 's/.*swap.*/#&amp;/' /etc/fstab</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置内核参数，将桥接的IPv4流量传递到iptables的链</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt;EOF</span><br><span class="line"></span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line"></span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line"></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置源</p>
+</li>
+</ul>
+<ul>
+<li><p>配置yum源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget</span><br><span class="line"></span><br><span class="line">mkdir /etc/yum.repos.d/bak &amp;&amp; mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bak</span><br><span class="line"></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.cloud.tencent.com/repo/centos7_base.repo</span><br><span class="line"></span><br><span class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.cloud.tencent.com/repo/epel-7.repo</span><br><span class="line"></span><br><span class="line">yum clean all &amp;&amp; yum makecache</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置kubernetes源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line"></span><br><span class="line">[kubernetes]</span><br><span class="line"></span><br><span class="line">name=Kubernetes</span><br><span class="line"></span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="line"></span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">gpgcheck=1</span><br><span class="line"></span><br><span class="line">repo_gpgcheck=1</span><br><span class="line"></span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line"></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置docker repo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装软件（还是所有节点执行）"><a href="#安装软件（还是所有节点执行）" class="headerlink" title="安装软件（还是所有节点执行）"></a>安装软件（还是所有节点执行）</h3><ul>
+<li><p>docker</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y docker-ce</span><br><span class="line"></span><br><span class="line">systemctl enable docker &amp;&amp; systemctl start docker</span><br></pre></td></tr></table></figure>
+<p>也可以指定版本，装完后设置开机自启并且启动</p>
+</li>
+<li><p>安装kubeadm、kubelet、kubectl</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y kubelet kubeadm kubectl</span><br><span class="line"></span><br><span class="line">systemctl enable kubelet</span><br></pre></td></tr></table></figure>
+<p>kebeadm就是k8s集群的自动化部署工具。Kubelet负责与其他节点集群通信，并进行本节点Pod和容器生命周期的管理。kubectl是管理工具。</p>
+</li>
+<li><p>先把要用到的镜像下载了，因为默认从k8s.grc.io下载镜像，当然你也可以架上你的梯子，或者指定国内的镜像站，办法很多自己选择吧，下面提供脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line">KUBE_VERSION=v1.15.1</span><br><span class="line">PAUSE_VERSION=3.1</span><br><span class="line">ETCD_VERSION=3.3.10</span><br><span class="line">COREDNS_VERSION=1.3.1</span><br><span class="line">FLANNEL_VERSION=v0.11.0-amd64</span><br><span class="line">docker pull mirrorgooglecontainers/kube-apiserver:$KUBE_VERSION</span><br><span class="line">docker pull mirrorgooglecontainers/kube-controller-manager:$KUBE_VERSION</span><br><span class="line">docker pull mirrorgooglecontainers/kube-scheduler:$KUBE_VERSION</span><br><span class="line">docker pull mirrorgooglecontainers/kube-proxy:$KUBE_VERSION</span><br><span class="line">docker pull mirrorgooglecontainers/pause:$PAUSE_VERSION</span><br><span class="line">docker pull mirrorgooglecontainers/etcd:$ETCD_VERSION</span><br><span class="line">docker pull coredns/coredns:$COREDNS_VERSION</span><br><span class="line">docker pull quay.io/coreos/flannel:$FLANNEL_VERSION</span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/kube-proxy:$KUBE_VERSION k8s.gcr.io/kube-proxy:$KUBE_VERSION</span><br><span class="line">docker tag mirrorgooglecontainers/kube-scheduler:$KUBE_VERSION k8s.gcr.io/kube-scheduler:$KUBE_VERSION</span><br><span class="line">docker tag mirrorgooglecontainers/kube-apiserver:$KUBE_VERSION k8s.gcr.io/kube-apiserver:$KUBE_VERSION</span><br><span class="line">docker tag mirrorgooglecontainers/kube-controller-manager:$KUBE_VERSION k8s.gcr.io/kube-controller-manager:$KUBE_VERSION</span><br><span class="line">docker tag mirrorgooglecontainers/etcd:$ETCD_VERSION k8s.gcr.io/etcd:$ETCD_VERSION</span><br><span class="line">docker tag coredns/coredns:$COREDNS_VERSION k8s.gcr.io/coredns:$COREDNS_VERSION</span><br><span class="line">docker tag mirrorgooglecontainers/pause:$PAUSE_VERSION k8s.gcr.io/pause:$PAUSE_VERSION</span><br><span class="line"></span><br><span class="line">docker rmi mirrorgooglecontainers/kube-proxy:$KUBE_VERSION</span><br><span class="line">docker rmi mirrorgooglecontainers/kube-scheduler:$KUBE_VERSION</span><br><span class="line">docker rmi mirrorgooglecontainers/kube-apiserver:$KUBE_VERSION</span><br><span class="line">docker rmi mirrorgooglecontainers/kube-controller-manager:$KUBE_VERSION</span><br><span class="line">docker rmi mirrorgooglecontainers/etcd:$ETCD_VERSION</span><br><span class="line">docker rmi coredns/coredns:$COREDNS_VERSION</span><br><span class="line">docker rmi mirrorgooglecontainers/pause:$PAUSE_VERSION</span><br></pre></td></tr></table></figure>
+<p>版本看自己<code>kubeadm config images list</code>看所需的版本，自己修改</p>
+<h3 id="初始化master节点"><a href="#初始化master节点" class="headerlink" title="初始化master节点"></a>初始化master节点</h3></li>
+<li><p>初始化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --kubernetes-version=1.14.2 \</span><br><span class="line"></span><br><span class="line">--service-cidr=10.1.0.0/16 \</span><br><span class="line"></span><br><span class="line">--pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+<p>参数有很多，百度看看就好了…<br><br>执行成功后会有一个类似</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join 192.168.1.71:6443 --token kekvgu.nw1n76h84f4camj6 \</span><br><span class="line"></span><br><span class="line">--discovery-token-ca-cert-hash sha256:4ee74205227c78ca62f2d641635afa4d50e6634acfaa8291f28582c7e3b0e30e</span><br></pre></td></tr></table></figure>
+<p>这个是用来加节点的，先记下来</p>
+</li>
+<li><p>配置kubectl工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /root/.kube</span><br><span class="line">sudo cp /etc/kubernetes/admin.conf /root/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure>
+<p>这段也是执行成功后会打印出来的，执行就好了<br><br>然后试试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line"></span><br><span class="line">kubectl get cs</span><br></pre></td></tr></table></figure>
+<p>get nodes 会发现 master是notready，那是因为没有装网络插件，等下装了就好了。</p>
+</li>
+<li><p>部署flannel网络</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+<p>再执行<code>kubectl get nodes</code>应该就看到master 是ready了</p>
+</li>
+</ul>
+<h3 id="加入子节点"><a href="#加入子节点" class="headerlink" title="加入子节点"></a>加入子节点</h3><p>刚刚master节点不是复制了那个 kubeadm join xxx 的那个命令了吗，直接在节点上运行就好了。token的有效期好像只有一天，过期的话<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm token create --print-join-command --ttl 0</span><br></pre></td></tr></table></figure></p>
+<p>加入后等一会，然后再master节点上执行<code>kubectl get nodes</code>如果node1是notready的话，就把master部署flannel的那个语句在node1也执行下，这步我有点忘了。</p>
+<h3 id="安装Dashboard（master上）"><a href="#安装Dashboard（master上）" class="headerlink" title="安装Dashboard（master上）"></a>安装Dashboard（master上）</h3><ul>
+<li><p>创建dashboard的yaml文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed -i 's/k8s.gcr.io/loveone/g' kubernetes-dashboard.yaml</span><br><span class="line"></span><br><span class="line">sed -i '/targetPort:/a\ \ \ \ \ \ nodePort: 30001\n\ \ type: NodePort' kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+<p>改成NodePort方式（一脸懵逼），指定端口</p>
+</li>
+<li><p>部署dashboard</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查服务状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployment kubernetes-dashboard -n kube-system</span><br><span class="line"></span><br><span class="line">kubectl get pods -n kube-system -o wide</span><br><span class="line"></span><br><span class="line">kubectl get services -n kube-system</span><br><span class="line"></span><br><span class="line">netstat -ntlp|grep 30001</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问dashboard<br>用<strong>火狐</strong>浏览器，访问<em>https://${masterip}:30001</em>,垃圾谷歌不让接受风险</p>
+</li>
+</ul>
+<ol start="5">
+<li>获取访问token<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create serviceaccount  dashboard-admin -n kube-system</span><br><span class="line">kubectl create clusterrolebinding  dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin</span><br><span class="line">kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/&#123;print $1&#125;')</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>把获取的令牌填进去<br><img src="/2019/07/31/k8s-吐血小记/login.png" alt="login"><br>然后就登录进去了<br><img src="/2019/07/31/k8s-吐血小记/dashboard.png" alt="login"></p>
+<p>end！😭😭😭</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+          
+            <a href="/tags/k8s/" rel="tag"><i class="fa fa-tag"></i> k8s</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/docker学习小记/" rel="next" title="docker学习小记">
+                <i class="fa fa-chevron-left"></i> docker学习小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/16/neo4j导入知识图谱初体验/" rel="prev" title="neo4j导入知识图谱初体验">
+                neo4j导入知识图谱初体验 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+ <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/yise.png"
+                alt="yuuki" />
+            
+              <p class="site-author-name" itemprop="name">yuuki</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mrbird.cc" title="https://mrbird.cc" rel="noopener" target="_blank">MrBird</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://liuzhuoming.xyz/" title="http://liuzhuoming.xyz/" rel="noopener" target="_blank">CV胸</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.sonake.com/" title="https://www.sonake.com/" rel="noopener" target="_blank">云大佬</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统配置-在每台机子都这么做"><span class="nav-number">2.</span> <span class="nav-text">系统配置(在每台机子都这么做)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装软件（还是所有节点执行）"><span class="nav-number">3.</span> <span class="nav-text">安装软件（还是所有节点执行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化master节点"><span class="nav-number">4.</span> <span class="nav-text">初始化master节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加入子节点"><span class="nav-number">5.</span> <span class="nav-text">加入子节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Dashboard（master上）"><span class="nav-number">6.</span> <span class="nav-text">安装Dashboard（master上）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuuki</span>
+
+  
+
+  
+</div>
+<!--
+
+
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.5.0</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: '9cnLmPwwzy2Blh70qyLkwVsd-gzGzoHsz',
+        appKey: '8De3bIBDaRtb9uIFAKrKN2YN',
+        placeholder: 'ヾﾉ≧∀≦)o 来呀！快活呀！~',
+        avatar:'monsterid',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "de7fw7jpPPL0mFhbcKQNv5Oq-9Nh9j0Va",
+                'X-LC-Key': "ksAmt3UmG6DBkExqMmOVSwe7",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/mo.min.js"></script>
+<script>
+$(function(){$("a").not(".nav-link,.cloud-tie-join-count,.ignore-href,.jstree-anchor").addClass("animsition-link")});var burst1=new mojs.Burst({left:0,top:0,radius:{5:40},children:{shape:"circle",fill:["red","cyan","orange"],fillOpacity:.8,radiusX:3.5,radiusY:3.5}});document.addEventListener("click",function(a){null==a.target.href&&"footer"!=a.target.className&&"copyright"!=a.target.className&&"author__urls social-icons"!=a.target.className&&"author__avatar"!=a.target.className&&"sidebar sidebar-active"!=a.target.className&&burst1.tune({x:a.pageX,y:a.pageY}).generate().replay()})
+</script>
+</body>
+</html>
