@@ -105,20 +105,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Yuuki Blog">
-<meta property="og:url" content="https://yuuki80code.github.io/archives/page/3/index.html">
+  <meta name="description" content="公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！） 初始化 sudo iptables -F 关闭防火墙 sudo ntpdate time.nist.gov 同步时间 docker swarm init –advertise-addr=当前机器的ip地址  根据提示先加入manage，再去work节点加入集群 一些操作 创建">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker swarm 初体验">
+<meta property="og:url" content="https://yuuki80code.github.io/2021/01/12/docker-swarm-初体验/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
+<meta property="og:description" content="公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！） 初始化 sudo iptables -F 关闭防火墙 sudo ntpdate time.nist.gov 同步时间 docker swarm init –advertise-addr=当前机器的ip地址  根据提示先加入manage，再去work节点加入集群 一些操作 创建">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-01-12T10:10:35.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yuuki Blog">
+<meta name="twitter:title" content="docker swarm 初体验">
+<meta name="twitter:description" content="公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！） 初始化 sudo iptables -F 关闭防火墙 sudo ntpdate time.nist.gov 同步时间 docker swarm init –advertise-addr=当前机器的ip地址  根据提示先加入manage，再去work节点加入集群 一些操作 创建">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/archives/page/3/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2021/01/12/docker-swarm-初体验/"/>
 
 
 
@@ -128,7 +133,7 @@
   };
 </script>
 
-  <title>归档 | Yuuki Blog</title>
+  <title>docker swarm 初体验 | Yuuki Blog</title>
   
 
 
@@ -177,7 +182,7 @@
     
   
 
-  <div class="container sidebar-position-right page-archive">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -256,7 +261,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -274,25 +279,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -318,343 +304,221 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2021/01/12/docker-swarm-初体验/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">docker swarm 初体验
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-12 17:58:53 / 修改时间：18:10:35" itemprop="dateCreated datePublished" datetime="2021-01-12T17:58:53+08:00">2021-01-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 28 篇日志。 继续努力。
-      </span>
-      
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/01/12/docker-swarm-初体验/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2021/01/12/docker-swarm-初体验/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/2021/01/12/docker-swarm-初体验/" class="leancloud_visitors" data-flag-title="docker swarm 初体验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/27/SpringCloud-学习之-Feign/" itemprop="url">
-              
-                <span itemprop="name">SpringCloud 学习之 Feign</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-27T20:54:32+08:00"
-              content="2018-11-27" >
-          11-27
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/21/SpringCloud-学习之-Ribbon负载均衡/" itemprop="url">
-              
-                <span itemprop="name">SpringCloud-学习之-Ribbon负载均衡</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-21T20:41:05+08:00"
-              content="2018-11-21" >
-          11-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/16/SpringCloud-学习之-Eureka/" itemprop="url">
-              
-                <span itemprop="name">SpringCloud 学习之 Eureka</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-16T21:16:31+08:00"
-              content="2018-11-16" >
-          11-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/java8-函数式接口学习/" itemprop="url">
-              
-                <span itemprop="name">java8 函数式接口学习</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-10-25T11:24:16+08:00"
-              content="2018-10-25" >
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！）</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ol>
+<li><code>sudo iptables -F</code> 关闭防火墙</li>
+<li><code>sudo ntpdate time.nist.gov</code> 同步时间</li>
+<li>docker swarm init –advertise-addr=当前机器的ip地址</li>
+</ol>
+<p>根据提示先加入manage，再去work节点加入集群</p>
+<h3 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h3><ol>
+<li><p>创建服务</p>
+<p><code>docker service create</code> 创建服务类似docker run</p>
+</li>
+<li><p>查看服务</p>
+<p><code>docker service ls</code>  查看所有</p>
+<p><code>docker service xxx</code>  查看具体某个</p>
+</li>
+<li><p><code>docker service scale 服务名=数量</code> 扩容</p>
+</li>
+<li><p>。。。看文档去</p>
+</li>
+</ol>
+<h3 id="安装portainer"><a href="#安装portainer" class="headerlink" title="安装portainer"></a>安装portainer</h3><p>可视化总比敲命令舒服多了- -</p>
+<p><code>curl -L https://downloads.portainer.io/portainer-ee-agent-stack.yml -o portainer-agent-stack.yml</code></p>
+<p>载下来的yml打开看看agent是否映射9001端口，没有自己加上。</p>
+<p>然后<code>docker stack deploy -c portainer-agent-stack.yml portainer</code></p>
+<p>浏览器打开<strong><a href="http://ip:8000" target="_blank" rel="noopener">http://ip:8000</a></strong>  就好了。</p>
+<p>如果领导同意，下一波更新上云！</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/17/Vue学习之-bus状态管理/" itemprop="url">
-              
-                <span itemprop="name">Vue学习之 bus状态管理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-17T20:33:26+08:00"
-              content="2018-09-17" >
-          09-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/23/毕业了/" itemprop="url">
-              
-                <span itemprop="name">毕业了</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-23T09:55:33+08:00"
-              content="2018-06-23" >
-          06-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/16/Spring-Boot2-0-自定义redisCacheManager/" itemprop="url">
-              
-                <span itemprop="name">Spring Boot2.0 自定义redisCacheManager</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-16T16:37:07+08:00"
-              content="2018-06-16" >
-          06-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/07/第一篇/" itemprop="url">
-              
-                <span itemprop="name">第一篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-07T19:51:36+08:00"
-              content="2018-06-07" >
-          06-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/09/换电脑测试/" rel="next" title="换电脑测试">
+                <i class="fa fa-chevron-left"></i> 换电脑测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -674,8 +538,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -796,6 +669,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些操作"><span class="nav-number">2.</span> <span class="nav-text">一些操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装portainer"><span class="nav-number">3.</span> <span class="nav-text">安装portainer</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -920,6 +809,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
 
   
 
@@ -979,43 +872,42 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function ({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
-        });
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
     }
     
 
@@ -1035,9 +927,7 @@
             });
           };
           
-          if ($('.post-title-link').length >= 1) {
-            showTime(Counter);
-          }
+          addCount(Counter);
           
         })
     });
