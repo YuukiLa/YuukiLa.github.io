@@ -105,25 +105,25 @@
 
 
 
-  <meta name="description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
-<meta name="keywords" content="springcloud">
+  <meta name="description" content="spring oauth2支持用户名密码登录，但是难免要接入微信登录啊短信登录啊这些乱七八糟的登录方式。之前用那种filter的方式，不是那么好看！所以改用这种自定义granter的方式。">
+<meta name="keywords" content="spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringCloud 学习之 Hystrix">
-<meta property="og:url" content="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/index.html">
+<meta property="og:title" content="spring oauth2 自定义granter">
+<meta property="og:url" content="https://yuuki80code.github.io/2021/02/06/spring-oauth2-自定义granter/index.html">
 <meta property="og:site_name" content="Yuuki Blog">
-<meta property="og:description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
+<meta property="og:description" content="spring oauth2支持用户名密码登录，但是难免要接入微信登录啊短信登录啊这些乱七八糟的登录方式。之前用那种filter的方式，不是那么好看！所以改用这种自定义granter的方式。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-12T13:43:56.000Z">
+<meta property="og:updated_time" content="2021-02-06T07:22:47.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringCloud 学习之 Hystrix">
-<meta name="twitter:description" content="Hystrix是啥hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。hystrix就是用来防止这种情况发生的。">
+<meta name="twitter:title" content="spring oauth2 自定义granter">
+<meta name="twitter:description" content="spring oauth2支持用户名密码登录，但是难免要接入微信登录啊短信登录啊这些乱七八糟的登录方式。之前用那种filter的方式，不是那么好看！所以改用这种自定义granter的方式。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/"/>
+  <link rel="canonical" href="https://yuuki80code.github.io/2021/02/06/spring-oauth2-自定义granter/"/>
 
 
 
@@ -133,7 +133,7 @@
   };
 </script>
 
-  <title>SpringCloud 学习之 Hystrix | Yuuki Blog</title>
+  <title>spring oauth2 自定义granter | Yuuki Blog</title>
   
 
 
@@ -320,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2018/12/12/SpringCloud-学习之-Hystrix/">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2021/02/06/spring-oauth2-自定义granter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuuki">
@@ -337,7 +337,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SpringCloud 学习之 Hystrix
+          <h1 class="post-title" itemprop="name headline">spring oauth2 自定义granter
               
             
           </h1>
@@ -362,7 +362,7 @@
                 
               
 
-              <time title="创建时间：2018-12-12 20:23:06 / 修改时间：21:43:56" itemprop="dateCreated datePublished" datetime="2018-12-12T20:23:06+08:00">2018-12-12</time>
+              <time title="创建时间：2021-02-06 15:00:05 / 修改时间：15:22:47" itemprop="dateCreated datePublished" datetime="2021-02-06T15:00:05+08:00">2021-02-06</time>
             
 
             
@@ -381,8 +381,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/12/SpringCloud-学习之-Hystrix/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/12/12/SpringCloud-学习之-Hystrix/" itemprop="commentCount"></span>
+                <a href="/2021/02/06/spring-oauth2-自定义granter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2021/02/06/spring-oauth2-自定义granter/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -390,7 +390,7 @@
 
           
           
-             <span id="/2018/12/12/SpringCloud-学习之-Hystrix/" class="leancloud_visitors" data-flag-title="SpringCloud 学习之 Hystrix">
+             <span id="/2021/02/06/spring-oauth2-自定义granter/" class="leancloud_visitors" data-flag-title="spring oauth2 自定义granter">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -421,18 +421,23 @@
       
 
       
-        <h3 id="Hystrix是啥"><a href="#Hystrix是啥" class="headerlink" title="Hystrix是啥"></a>Hystrix是啥</h3><p>hystrix是用来做服务保护的，在微服务框架中，可能会有A服务调用B服务，B服务再去调用C服务的情况，这个时候如果C服务挂了，就会产生服务雪崩效应。<br>hystrix就是用来防止这种情况发生的。<br><a id="more"></a></p>
-<h3 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h3><p>先把依赖引进来<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>哦对了，我们应该在调用方来防止服务雪崩，在提供方防止的话万一挂了还不是一样= =所以在服务消费者上使用hystrix</p>
-<p>引入依赖后再入口类上加上注解<code>@EnableHystrix</code> 然后发现我擦怎么一个入口类这么多注解- -<br>不慌，spring提供了一个叫<code>@SpringCloudApplication</code>的注解，点进去就会发现他包含了<code>@SpringBootApplication</code>,<code>@EnableDiscoveryClient</code>,<code>@EnableCircuitBreaker</code>三个注解</p>
-<p>接下来改造一下controller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;/msg&quot;)</span><br><span class="line">@HystrixCommand(fallbackMethod = &quot;getMsgFallBack&quot;)</span><br><span class="line">public String getMsg()&#123;</span><br><span class="line">    return msgClient.getMsg();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public String getMsgFallBack()&#123;</span><br><span class="line">    return &quot;触发服务降级...&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在getMsg方法上加上了<code>@HystrixCommand(fallbackMethod = &quot;getMsgFallBack&quot;)</code>神马意思呢？就是当服务提供方挂掉了，超时了，就会去调用<em>getMsgFallBack</em>方法，返回错误提示<br>好像在方法上加也是挺麻烦的哦~没关系，可以用<code>@DefaultProperties(defaultFallback = &quot;getMsgFallBack&quot;)</code>.加在类上，就不需要每个都配置啦！</p>
-<h3 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h3><p>刚刚说到服务提供者如果超时或者挂了，就会触发服务降级，那么默认超时是多少啊，看了下源码…1s！😱 我去，这个可不太行！<br>应该需要修改一下！<br>修改下刚刚的注解<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@DefaultProperties(defaultFallback = &quot;getMsgFallBack&quot;,commandProperties = &#123;@HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;,value = &quot;3000&quot;)&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>加上了commandProperties这个属性，然后value就是你想要的超时时间。<br>这个属性在<code>@HystrixCommand</code>上也有，是一样的。<br>在服务提供者的返回方法里让他睡上2秒钟，发现…他还是触发了降级！哈哈哈惊喜~因为我们已经集成了Feign了，而Feign是基于Ribbon的封装，本身有一套重试机制，原则上Ribbon的超时重试要大于Hystrix，不然就没意义了！<br>在yml里面加点配置就好了<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ribbon:</span></span><br><span class="line"><span class="attr">  ReadTimeout:</span> <span class="number">5000</span></span><br><span class="line"><span class="attr">  ConnectTimeout:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure></p>
-<p>然后再记录下全局的Hystrix超时配置，虽然百度一大堆= =<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hystrix:</span></span><br><span class="line"><span class="attr">  command:</span></span><br><span class="line"><span class="attr">    default:</span></span><br><span class="line"><span class="attr">      execution:</span></span><br><span class="line"><span class="attr">        isolation:</span></span><br><span class="line"><span class="attr">          thread:</span></span><br><span class="line"><span class="attr">            timeoutInMilliseconds:</span> <span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
-<p>一寸长一寸强！</p>
-<h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a>熔断</h3><p>Hystrix有一套熔断机制，就比如一个服务你请求了20次，10几次都是超时的，就会触发熔断，这个服务就相当于被挂起，过了一定时间他就会尝试让请求通过，如果没问题了服务就会恢复正常。</p>
-<p>就了解到这吧够用了应该- -不懂再看文档了，<a href="https://mrbird.cc/Spring-Cloud-Hystrix-Circuit-Breaker.html" target="_blank" rel="noopener">点这</a>看帅逼群主的博客！</p>
+        <h3 id="spring-oauth2"><a href="#spring-oauth2" class="headerlink" title="spring oauth2"></a>spring oauth2</h3><p>支持用户名密码登录，但是难免要接入微信登录啊短信登录啊这些乱七八糟的登录方式。之前用那种filter的方式，不是那么好看！所以改用这种自定义granter的方式。</p>
+<a id="more"></a>
+<h3 id="这样做"><a href="#这样做" class="headerlink" title="这样做"></a>这样做</h3><ol>
+<li><p>新建CaptchaTokenGranter 继承 AbstractTokenGranter</p>
+</li>
+<li><p>重写<code>getOAuth2Authentication</code> 方法</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//..。各种判断</span></span><br><span class="line">Authentication userAuth = <span class="keyword">new</span> UsernamePasswordAuthenticationToken(username, password);</span><br><span class="line">((AbstractAuthenticationToken) userAuth).setDetails(parameters);</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line">            userAuth = authenticationManager.authenticate(userAuth);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (AccountStatusException | BadCredentialsException ase) &#123;</span><br><span class="line">            <span class="comment">//covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidGrantException(ase.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// If the username/password are wrong the spec says we should send 400/invalid grant</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (userAuth == <span class="keyword">null</span> || !userAuth.isAuthenticated()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InvalidGrantException(<span class="string">"Could not authenticate user: "</span> + username);</span><br><span class="line">        &#125;</span><br><span class="line"> OAuth2Request storedOAuth2Request = getRequestFactory().createOAuth2Request(client, tokenRequest);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> OAuth2Authentication(storedOAuth2Request, userAuth);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>AuthorizationServerConfigurerAdapter</code> 的配置中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">configure(AuthorizationServerEndpointsConfigurer endpoints) <span class="comment">//这个配置方法</span></span><br><span class="line"></span><br><span class="line">List&lt;TokenGranter&gt; granters = <span class="keyword">new</span> ArrayList&lt;&gt;(Collections.singletonList(endpoints.getTokenGranter()));</span><br><span class="line">granters.add(<span class="keyword">new</span> CaptchaTokenGranter(...));</span><br><span class="line"><span class="comment">//把granter添加进去</span></span><br><span class="line">endpoints.tokenGranter(<span class="keyword">new</span> CompositeTokenGranter(granters));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>oauth_client_details别忘了加上你自定义的grant_type!</p>
+</li>
+<li>去登录，grant_type写成你自定义的，参数就是你自己定的那些</li>
+</ol>
+<p>🐩这边没看懂的，到<a href="https://github.com/yuuki80code/cooky-cloud/tree/master/cooky-auth/src/main/java/com/yuuki/cooky/auth/granter" target="_blank" rel="noopener">这里看</a></p>
 
       
     </div>
@@ -456,7 +461,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+            <a href="/tags/spring/" rel="tag"><i class="fa fa-tag"></i> spring</a>
           
         </div>
       
@@ -469,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/27/SpringCloud-学习之-Feign/" rel="next" title="SpringCloud 学习之 Feign">
-                <i class="fa fa-chevron-left"></i> SpringCloud 学习之 Feign
+              <a href="/2021/01/12/docker-swarm-初体验/" rel="next" title="docker swarm 初体验">
+                <i class="fa fa-chevron-left"></i> docker swarm 初体验
               </a>
             
           </div>
@@ -478,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/17/SpringCloud-学习之-Zuul/" rel="prev" title="SpringCloud 学习之 Zuul">
-                SpringCloud 学习之 Zuul <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -669,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hystrix是啥"><span class="nav-number">1.</span> <span class="nav-text">Hystrix是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单使用"><span class="nav-number">2.</span> <span class="nav-text">简单使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时"><span class="nav-number">3.</span> <span class="nav-text">超时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熔断"><span class="nav-number">4.</span> <span class="nav-text">熔断</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#spring-oauth2"><span class="nav-number">1.</span> <span class="nav-text">spring oauth2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这样做"><span class="nav-number">2.</span> <span class="nav-text">这样做</span></a></li></ol></div>
             
 
           </div>

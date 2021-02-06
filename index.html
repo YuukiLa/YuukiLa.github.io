@@ -316,6 +316,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2021/02/06/spring-oauth2-自定义granter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuuki">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yise.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yuuki Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2021/02/06/spring-oauth2-自定义granter/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">spring oauth2 自定义granter</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-02-06 15:00:05 / 修改时间：15:22:47" itemprop="dateCreated datePublished" datetime="2021-02-06T15:00:05+08:00">2021-02-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/02/06/spring-oauth2-自定义granter/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2021/02/06/spring-oauth2-自定义granter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2021/02/06/spring-oauth2-自定义granter/" class="leancloud_visitors" data-flag-title="spring oauth2 自定义granter">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="spring-oauth2"><a href="#spring-oauth2" class="headerlink" title="spring oauth2"></a>spring oauth2</h3><p>支持用户名密码登录，但是难免要接入微信登录啊短信登录啊这些乱七八糟的登录方式。之前用那种filter的方式，不是那么好看！所以改用这种自定义granter的方式。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/02/06/spring-oauth2-自定义granter/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2021/01/12/docker-swarm-初体验/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -361,12 +530,24 @@
                 
               
 
-              <time title="创建时间：2021-01-12 17:58:53 / 修改时间：18:10:35" itemprop="dateCreated datePublished" datetime="2021-01-12T17:58:53+08:00">2021-01-12</time>
+              <time title="创建时间：2021-01-12 17:58:53" itemprop="dateCreated datePublished" datetime="2021-01-12T17:58:53+08:00">2021-01-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-02-06 15:23:02" itemprop="dateModified" datetime="2021-02-06T15:23:02+08:00">2021-02-06</time>
               
             
           </span>
@@ -421,35 +602,16 @@
 
       
         
+          <p>公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！）</p>
+          <!--noindex-->
           
-            <p>公司服务运行在docker里，集群不太好搞，所以研究下docker swarm（为啥不用k8s？因为太难了看不懂！菜鸡！）</p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ol>
-<li><code>sudo iptables -F</code> 关闭防火墙</li>
-<li><code>sudo ntpdate time.nist.gov</code> 同步时间</li>
-<li>docker swarm init –advertise-addr=当前机器的ip地址</li>
-</ol>
-<p>根据提示先加入manage，再去work节点加入集群</p>
-<h3 id="一些操作"><a href="#一些操作" class="headerlink" title="一些操作"></a>一些操作</h3><ol>
-<li><p>创建服务</p>
-<p><code>docker service create</code> 创建服务类似docker run</p>
-</li>
-<li><p>查看服务</p>
-<p><code>docker service ls</code>  查看所有</p>
-<p><code>docker service xxx</code>  查看具体某个</p>
-</li>
-<li><p><code>docker service scale 服务名=数量</code> 扩容</p>
-</li>
-<li><p>。。。看文档去</p>
-</li>
-</ol>
-<h3 id="安装portainer"><a href="#安装portainer" class="headerlink" title="安装portainer"></a>安装portainer</h3><p>可视化总比敲命令舒服多了- -</p>
-<p><code>curl -L https://downloads.portainer.io/portainer-ee-agent-stack.yml -o portainer-agent-stack.yml</code></p>
-<p>载下来的yml打开看看agent是否映射9001端口，没有自己加上。</p>
-<p>然后<code>docker stack deploy -c portainer-agent-stack.yml portainer</code></p>
-<p>浏览器打开<strong><a href="http://ip:8000" target="_blank" rel="noopener">http://ip:8000</a></strong>  就好了。</p>
-<p>如果领导同意，下一波更新上云！</p>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/2021/01/12/docker-swarm-初体验/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1874,175 +2036,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://yuuki80code.github.io/2019/12/19/spring-事务传播/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yuuki">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/yise.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yuuki Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/12/19/spring-事务传播/" class="post-title-link" itemprop="https://yuuki80code.github.io/index.html">spring 事务传播</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-12-19 20:43:37 / 修改时间：21:19:58" itemprop="dateCreated datePublished" datetime="2019-12-19T20:43:37+08:00">2019-12-19</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/12/19/spring-事务传播/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/12/19/spring-事务传播/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/12/19/spring-事务传播/" class="leancloud_visitors" data-flag-title="spring 事务传播">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>spring 提供了非常方便的事务管理，只需要在service层加上 <code>@Transactional</code> 就可以开启事务，<code>@Transactional</code> 可以指定很多种传播级别，下面记录一下。。。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/12/19/spring-事务传播/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2093,7 +2086,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
